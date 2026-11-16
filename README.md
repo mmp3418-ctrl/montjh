@@ -1,12 +1,13 @@
-# Garden City Company L.L.C · Begonia Club
+# Garden City L.L.C
 
-Production web app for **Garden City Company L.L.C** (Tourism Investment Cooperation) and its flagship project **Begonia Club**.
+Corporate website for **Garden City L.L.C** — Tourism Investment Cooperation.
 
 ## Features
 
 - Dark / Light theme with localStorage persistence
-- Arabic (RTL) / English (LTR) i18n
-- Glassmorphism UI, mobile-first navigation drawer
+- Arabic (RTL) / English (LTR) bilingual UI
+- Glassmorphism design, mobile-first navigation drawer
+- Investments & categories grid
 - Validated contact form, management cards, Google Maps embed
 
 ## Scripts

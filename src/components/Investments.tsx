@@ -8,7 +8,10 @@ const Investments: FC = () => {
   const { t } = useLanguage()
 
   return (
-    <section id="investments" className="section-pad relative overflow-hidden bg-[var(--bg-elevated)]/60">
+    <section
+      id="investments"
+      className="section-pad relative overflow-hidden bg-[var(--bg-elevated)]/60"
+    >
       <div className="pointer-events-none absolute start-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[#0078D7]/10 blur-3xl" />
 
       <div className="container-site relative">

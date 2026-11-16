@@ -1,13 +1,7 @@
 export type ThemeMode = 'dark' | 'light'
 export type Language = 'ar' | 'en'
 
-export type NavLabelKey =
-  | 'home'
-  | 'about'
-  | 'investments'
-  | 'club'
-  | 'gallery'
-  | 'contact'
+export type NavLabelKey = 'home' | 'about' | 'investments' | 'contact'
 
 export interface NavItem {
   id: string
@@ -18,37 +12,12 @@ export interface NavItem {
 export interface ServiceItem {
   id: string
   icon: 'hotel' | 'plane' | 'landmark' | 'handshake' | 'tree' | 'compass'
-  titleKey: string
-  descriptionKey: string
-}
-
-export interface ClubFeature {
-  id: string
-  titleKey: string
-  descriptionKey: string
-}
-
-export type GalleryCategoryId =
-  | 'all'
-  | 'destinations'
-  | 'club'
-  | 'investment'
-  | 'hospitality'
-  | 'architecture'
-
-export interface GalleryItem {
-  id: string
-  titleKey: string
-  category: Exclude<GalleryCategoryId, 'all'>
-  imageUrl: string
-  altKey: string
 }
 
 export interface ContactPerson {
   id: string
   nameAr: string
   nameEn: string
-  roleKey: string
   phone: string
   phoneDisplay: string
   whatsapp: string
@@ -57,10 +26,8 @@ export interface ContactPerson {
 export interface CompanyInfo {
   nameAr: string
   nameEn: string
-  legalSuffix: string
   taglineAr: string
   taglineEn: string
-  clubName: string
   website: string
   addressAr: string
   addressEn: string

@@ -21,7 +21,7 @@ const ThemeToggle: FC<ThemeToggleProps> = ({ floating = false, className = '' })
       title={t.a11y.toggleTheme}
       className={`touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)] backdrop-blur-xl transition hover:border-[var(--glass-border-hover)] ${
         floating
-          ? 'fixed bottom-5 end-5 z-40 h-12 w-12 shadow-[var(--shadow-glass)] sm:bottom-6 sm:end-6'
+          ? 'fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] end-[max(1.25rem,env(safe-area-inset-right))] z-40 h-12 w-12 shadow-[var(--shadow-glass)]'
           : 'h-10 w-10'
       } ${className}`}
     >

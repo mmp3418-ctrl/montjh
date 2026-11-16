@@ -13,7 +13,7 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
   const markColor = theme === 'dark' ? '#F8FAFC' : '#0B192C'
 
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
+    <div className={`flex min-w-0 items-center gap-2.5 ${className}`}>
       <svg
         width="40"
         height="40"
@@ -31,12 +31,15 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
         <ellipse cx="34" cy="24" rx="7" ry="4.5" fill="#0047AB" />
       </svg>
 
-      <div className={`min-w-0 leading-tight ${compact ? 'hidden sm:block' : ''}`}>
-        <p className="truncate text-sm font-extrabold tracking-tight" style={{ color: markColor }}>
+      <div className={`min-w-0 leading-tight ${compact ? 'max-w-[9.5rem] sm:max-w-none' : ''}`}>
+        <p
+          className="truncate text-sm font-extrabold tracking-tight"
+          style={{ color: markColor }}
+        >
           {t.brand.companyShort}
         </p>
         <p className="truncate text-[10px] font-medium text-cyan sm:text-[11px]">
-          {t.brand.club} · {t.brand.clubSubtitle}
+          {t.brand.tagline}
         </p>
       </div>
     </div>

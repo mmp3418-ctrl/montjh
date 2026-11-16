@@ -19,7 +19,7 @@ interface LanguageContextValue {
   setLanguage: (language: Language) => void
 }
 
-const STORAGE_KEY = 'begonia-language'
+const STORAGE_KEY = 'garden-city-language'
 const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 function getInitialLanguage(): Language {

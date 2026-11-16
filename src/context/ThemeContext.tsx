@@ -16,7 +16,7 @@ interface ThemeContextValue {
   setTheme: (theme: ThemeMode) => void
 }
 
-const STORAGE_KEY = 'begonia-theme'
+const STORAGE_KEY = 'garden-city-theme'
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 function getInitialTheme(): ThemeMode {
