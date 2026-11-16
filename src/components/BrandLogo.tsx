@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
-import { company } from '../data/content'
+import { BRAND_NAME } from '../data/content'
 
 interface BrandLogoProps {
   compact?: boolean
@@ -16,8 +16,8 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
   return (
     <div className={`flex min-w-0 items-center gap-2.5 ${className}`}>
       <svg
-        width="40"
-        height="40"
+        width={compact ? 36 : 40}
+        height={compact ? 36 : 40}
         viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -32,13 +32,15 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
         <ellipse cx="34" cy="24" rx="7" ry="4.5" fill="#0047AB" />
       </svg>
 
-      <div className={`min-w-0 leading-tight ${compact ? 'max-w-[11rem] sm:max-w-none' : ''}`}>
+      <div className="min-w-0 leading-tight">
         <p
-          className="truncate font-display text-sm font-extrabold tracking-tight"
+          className={`font-display font-extrabold tracking-tight ${
+            compact ? 'text-[13px] sm:text-sm' : 'text-sm sm:text-[15px]'
+          }`}
           style={{ color: markColor }}
           dir="ltr"
         >
-          {company.nameEn}
+          {BRAND_NAME}
         </p>
         <p className="truncate text-[10px] font-medium text-cyan sm:text-[11px]">
           {t.brand.tagline}

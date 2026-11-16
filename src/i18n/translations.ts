@@ -1,8 +1,8 @@
+import { BRAND_NAME } from '../data/content'
 import type { Language } from '../types'
 
 export interface Dictionary {
   brand: {
-    company: string
     tagline: string
   }
   nav: {
@@ -13,11 +13,10 @@ export interface Dictionary {
     cta: string
     openMenu: string
     closeMenu: string
+    menuLabel: string
   }
   hero: {
-    badgeCompany: string
     badgeSector: string
-    headline: string
     subheadline: string
     description: string
     ctaPrimary: string
@@ -42,19 +41,12 @@ export interface Dictionary {
     eyebrow: string
     title: string
     description: string
-    items: Record<
-      string,
-      {
-        title: string
-        description: string
-      }
-    >
+    items: Record<string, { title: string; description: string }>
   }
   contact: {
     eyebrow: string
     title: string
     description: string
-    companyInfo: string
     address: string
     phoneFax: string
     officialEmail: string
@@ -63,6 +55,7 @@ export interface Dictionary {
     call: string
     whatsapp: string
     directManagement: string
+    formTitle: string
     formName: string
     formNamePh: string
     formEmail: string
@@ -103,7 +96,6 @@ export interface Dictionary {
 export const translations: Record<Language, Dictionary> = {
   ar: {
     brand: {
-      company: 'Garden City L.L.C',
       tagline: 'التعاون الاستثماري السياحي',
     },
     nav: {
@@ -114,11 +106,10 @@ export const translations: Record<Language, Dictionary> = {
       cta: 'تواصل الآن',
       openMenu: 'فتح القائمة',
       closeMenu: 'إغلاق القائمة',
+      menuLabel: 'القائمة',
     },
     hero: {
-      badgeCompany: 'Garden City L.L.C',
       badgeSector: 'استثمار سياحي',
-      headline: 'Garden City L.L.C',
       subheadline: 'تعاون استثماري سياحي برؤية واضحة',
       description:
         'نطوّر وجهات سياحية استثنائية ونبني شراكات استراتيجية تعزز قيمة الاستثمار السياحي في قلب طرابلس وليبيا.',
@@ -127,8 +118,8 @@ export const translations: Record<Language, Dictionary> = {
     },
     about: {
       eyebrow: 'من نحن',
-      title: 'Garden City L.L.C… حيث يلتقي الاستثمار بالهيبة السياحية',
-      p1: 'Garden City L.L.C جهة متخصصة في التعاون الاستثماري السياحي، تعمل على بناء شراكات مستدامة ترفع قيمة الوجهات وتفتح آفاقاً جديدة للنمو.',
+      title: `حيث يلتقي الاستثمار بالهيبة السياحية`,
+      p1: `${BRAND_NAME} جهة متخصصة في التعاون الاستثماري السياحي، تعمل على بناء شراكات مستدامة ترفع قيمة الوجهات وتفتح آفاقاً جديدة للنمو.`,
       p2: 'نؤمن بأن السياحة منظومة متكاملة من الضيافة والثقافة والتجربة، ونقدّم حلولاً استثمارية بمعايير راقية تليق بطموح شركائنا.',
       p3: 'مقرنا في طريق المطار، سيدي صليم، طرابلس - ليبيا، ونخدم شركاءنا عبر قنوات مباشرة ومهنية لضمان سرعة الاستجابة وجودة التنفيذ.',
       visionTitle: 'رؤية استثمارية',
@@ -143,8 +134,7 @@ export const translations: Record<Language, Dictionary> = {
     investments: {
       eyebrow: 'الاستثمارات والتصنيفات',
       title: 'قطاعاتنا الاستثمارية',
-      description:
-        'تصنيفات واضحة ومنظمة لقطاعات التعاون الاستثماري السياحي التي تركز عليها Garden City L.L.C.',
+      description: `تصنيفات واضحة ومنظمة لقطاعات التعاون الاستثماري السياحي التي تركز عليها ${BRAND_NAME}.`,
       items: {
         hospitality: {
           title: 'الضيافة والفنادق',
@@ -183,7 +173,6 @@ export const translations: Record<Language, Dictionary> = {
       title: 'نحن هنا لبناء شراكتك القادمة',
       description:
         'تواصل مع الإدارة مباشرة، حدّد موقعنا على الخريطة، أو أرسل رسالتك عبر النموذج.',
-      companyInfo: 'معلومات الشركة',
       address: 'العنوان',
       phoneFax: 'هاتف وفاكس',
       officialEmail: 'البريد الرسمي',
@@ -192,6 +181,7 @@ export const translations: Record<Language, Dictionary> = {
       call: 'اتصال',
       whatsapp: 'واتساب',
       directManagement: 'الإدارة المباشرة',
+      formTitle: 'أرسل رسالة',
       formName: 'الاسم الكامل',
       formNamePh: 'أدخل اسمك',
       formEmail: 'البريد الإلكتروني',
@@ -216,8 +206,7 @@ export const translations: Record<Language, Dictionary> = {
       },
     },
     footer: {
-      blurb:
-        'Garden City L.L.C — التعاون الاستثماري السياحي. شراكات راقية ووجهات واعدة في طرابلس.',
+      blurb: `${BRAND_NAME} — التعاون الاستثماري السياحي. شراكات راقية ووجهات واعدة في طرابلس.`,
       quickLinks: 'روابط سريعة',
       contact: 'تواصل',
       rights: 'جميع الحقوق محفوظة.',
@@ -231,7 +220,6 @@ export const translations: Record<Language, Dictionary> = {
   },
   en: {
     brand: {
-      company: 'Garden City L.L.C',
       tagline: 'Tourism Investment Cooperation',
     },
     nav: {
@@ -242,11 +230,10 @@ export const translations: Record<Language, Dictionary> = {
       cta: 'Contact Us',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
+      menuLabel: 'Menu',
     },
     hero: {
-      badgeCompany: 'Garden City L.L.C',
       badgeSector: 'Tourism Investment',
-      headline: 'Garden City L.L.C',
       subheadline: 'Tourism investment cooperation with a clear vision',
       description:
         'We develop exceptional tourism destinations and build strategic partnerships that elevate investment value across Tripoli and Libya.',
@@ -255,8 +242,8 @@ export const translations: Record<Language, Dictionary> = {
     },
     about: {
       eyebrow: 'About Us',
-      title: 'Garden City… where investment meets tourism prestige',
-      p1: 'Garden City L.L.C is a specialized tourism investment cooperation firm building sustainable partnerships that elevate destinations and unlock new growth.',
+      title: 'Where investment meets tourism prestige',
+      p1: `${BRAND_NAME} is a specialized tourism investment cooperation firm building sustainable partnerships that elevate destinations and unlock new growth.`,
       p2: 'We believe tourism is an integrated system of hospitality, culture, and experience — delivered through refined investment solutions for ambitious partners.',
       p3: 'Based on Airport St., Sedy Slem, Tripoli - Libya, we serve partners through direct professional channels for fast response and quality delivery.',
       visionTitle: 'Investment Vision',
@@ -271,8 +258,7 @@ export const translations: Record<Language, Dictionary> = {
     investments: {
       eyebrow: 'Investments & Categories',
       title: 'Our investment categories',
-      description:
-        'Clear, organized classifications of the tourism investment sectors Garden City focuses on.',
+      description: `Clear, organized classifications of the tourism investment sectors ${BRAND_NAME} focuses on.`,
       items: {
         hospitality: {
           title: 'Hospitality & Hotels',
@@ -311,7 +297,6 @@ export const translations: Record<Language, Dictionary> = {
       title: 'Let’s build your next partnership',
       description:
         'Reach management directly, locate us on the map, or send your message through the form.',
-      companyInfo: 'Company Information',
       address: 'Address',
       phoneFax: 'Telephone & Fax',
       officialEmail: 'Official Email',
@@ -320,6 +305,7 @@ export const translations: Record<Language, Dictionary> = {
       call: 'Call',
       whatsapp: 'WhatsApp',
       directManagement: 'Direct Management',
+      formTitle: 'Send a message',
       formName: 'Full Name',
       formNamePh: 'Enter your name',
       formEmail: 'Email Address',
@@ -344,8 +330,7 @@ export const translations: Record<Language, Dictionary> = {
       },
     },
     footer: {
-      blurb:
-        'Garden City L.L.C — Tourism Investment Cooperation. Refined partnerships and promising destinations in Tripoli.',
+      blurb: `${BRAND_NAME} — Tourism Investment Cooperation. Refined partnerships and promising destinations in Tripoli.`,
       quickLinks: 'Quick Links',
       contact: 'Contact',
       rights: 'All rights reserved.',

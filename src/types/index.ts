@@ -1,11 +1,12 @@
+import type { ReactNode } from 'react'
+
 export type ThemeMode = 'dark' | 'light'
 export type Language = 'ar' | 'en'
-
 export type NavLabelKey = 'home' | 'about' | 'investments' | 'contact'
 
 export interface NavItem {
-  id: string
-  href: string
+  id: NavLabelKey
+  href: `#${NavLabelKey}`
   labelKey: NavLabelKey
 }
 
@@ -24,14 +25,13 @@ export interface ContactPerson {
 }
 
 export interface CompanyInfo {
-  nameAr: string
-  nameEn: string
+  brandName: 'Garden City L.L.C'
   taglineAr: string
   taglineEn: string
-  website: string
   addressAr: string
   addressEn: string
   phone: string
+  phoneTel: string
   email: string
   mapsUrl: string
   mapsEmbedUrl: string
@@ -57,7 +57,7 @@ export interface ContactFormState {
 
 export interface SectionHeadingProps {
   eyebrow: string
-  title: string
+  title: ReactNode
   description?: string
   align?: 'start' | 'center'
 }

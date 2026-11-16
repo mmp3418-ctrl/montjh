@@ -10,7 +10,7 @@ const Investments: FC = () => {
   return (
     <section
       id="investments"
-      className="section-pad relative overflow-hidden bg-[var(--bg-elevated)]/60"
+      className="section-pad relative overflow-hidden bg-[var(--bg-elevated)]/55"
     >
       <div className="pointer-events-none absolute start-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-[#0078D7]/10 blur-3xl" />
 
@@ -29,7 +29,7 @@ const Investments: FC = () => {
             return (
               <li
                 key={service.id}
-                className="glass-card group rounded-2xl p-5 hover:-translate-y-1.5 sm:p-6"
+                className="glass-card group rounded-2xl p-5 hover:-translate-y-1 sm:p-6"
               >
                 <div className="mb-5 inline-flex rounded-xl bg-brand-gradient p-3 text-white shadow-[0_8px_24px_rgba(0,169,255,0.28)] transition group-hover:scale-105">
                   <ServiceIcon name={service.icon} />

@@ -1,14 +1,16 @@
 import type { CompanyInfo, ContactPerson, NavItem, ServiceItem } from '../types'
 
+/** Canonical brand — never translate or localize this string. */
+export const BRAND_NAME = 'Garden City L.L.C' as const
+
 export const company: CompanyInfo = {
-  nameAr: 'Garden City L.L.C',
-  nameEn: 'Garden City L.L.C',
+  brandName: BRAND_NAME,
   taglineAr: 'التعاون الاستثماري السياحي',
   taglineEn: 'Tourism Investment Cooperation',
-  website: 'www.garden-city.ly',
   addressAr: 'طريق المطار، سيدي صليم، طرابلس - ليبيا',
   addressEn: 'Airport St., Sedy Slem, Tripoli - Libya',
   phone: '+218 (21) 480 2432',
+  phoneTel: '+218214802432',
   email: 'info@garden-city.ly',
   mapsUrl: 'https://maps.google.com/?q=32.794930,13.134346',
   mapsEmbedUrl:

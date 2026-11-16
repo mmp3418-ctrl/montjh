@@ -69,34 +69,6 @@ const Contact: FC = () => {
   const fieldClass =
     'w-full min-h-12 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[var(--glass-border-hover)] focus:ring-2 focus:ring-[#00A9FF]/20'
 
-  const infoCards = [
-    {
-      id: 'address',
-      icon: MapPin,
-      label: t.contact.address,
-      primary: language === 'ar' ? company.addressAr : company.addressEn,
-      secondary: language === 'ar' ? company.addressEn : company.addressAr,
-      href: company.mapsUrl,
-      external: true,
-    },
-    {
-      id: 'phone',
-      icon: Phone,
-      label: t.contact.phoneFax,
-      primary: company.phone,
-      href: 'tel:+218214802432',
-      ltr: true,
-    },
-    {
-      id: 'email',
-      icon: Mail,
-      label: t.contact.officialEmail,
-      primary: company.email,
-      href: `mailto:${company.email}`,
-      ltr: true,
-    },
-  ] as const
-
   return (
     <section id="contact" className="section-pad relative overflow-hidden">
       <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#0078D7]/10 blur-3xl" />
@@ -114,48 +86,79 @@ const Contact: FC = () => {
           ))}
         </div>
 
-        <div className="mt-8">
-          <LocationMap />
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <a
+            href={company.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="glass-card group rounded-2xl p-5 transition hover:-translate-y-1 sm:p-6"
+          >
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)]">
+              <MapPin size={18} aria-hidden="true" />
+            </div>
+            <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.address}
+            </p>
+            <p className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)] transition group-hover:text-cyan">
+              {language === 'ar' ? company.addressAr : company.addressEn}
+            </p>
+            <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]" dir="ltr">
+              {language === 'ar' ? company.addressEn : company.addressAr}
+            </p>
+          </a>
+
+          <a
+            href={`tel:${company.phoneTel}`}
+            className="glass-card group rounded-2xl p-5 transition hover:-translate-y-1 sm:p-6"
+          >
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)]">
+              <Phone size={18} aria-hidden="true" />
+            </div>
+            <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.phoneFax}
+            </p>
+            <p
+              className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)] transition group-hover:text-cyan"
+              dir="ltr"
+            >
+              {company.phone}
+            </p>
+          </a>
+
+          <a
+            href={`mailto:${company.email}`}
+            className="glass-card group rounded-2xl p-5 transition hover:-translate-y-1 sm:p-6"
+          >
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)]">
+              <Mail size={18} aria-hidden="true" />
+            </div>
+            <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.officialEmail}
+            </p>
+            <p
+              className="mt-2 break-all text-sm font-semibold leading-7 text-[var(--text-primary)] transition group-hover:text-cyan"
+              dir="ltr"
+            >
+              {company.email}
+            </p>
+          </a>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {infoCards.map((card) => (
-            <a
-              key={card.id}
-              href={card.href}
-              {...('external' in card && card.external
-                ? { target: '_blank', rel: 'noreferrer' }
-                : {})}
-              className="glass-card group rounded-2xl p-5 transition hover:-translate-y-1 sm:p-6"
-            >
-              <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)]">
-                <card.icon size={18} aria-hidden="true" />
-              </div>
-              <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
-                {card.label}
-              </p>
-              <p
-                className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)] transition group-hover:text-cyan sm:text-[15px]"
-                dir={'ltr' in card && card.ltr ? 'ltr' : undefined}
-              >
-                {card.primary}
-              </p>
-              {'secondary' in card && card.secondary ? (
-                <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]" dir="ltr">
-                  {card.secondary}
-                </p>
-              ) : null}
-            </a>
-          ))}
+        <div className="mt-8">
+          <LocationMap />
         </div>
 
         <div className="mt-8">
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="glass mx-auto max-w-4xl rounded-2xl p-5 sm:p-7"
-            aria-label={t.contact.title}
+            className="glass mx-auto w-full max-w-4xl rounded-2xl p-5 sm:p-7"
+            aria-label={t.contact.formTitle}
           >
+            <h3 className="mb-5 text-lg font-bold text-[var(--text-primary)] sm:text-xl">
+              {t.contact.formTitle}
+            </h3>
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label
@@ -273,7 +276,7 @@ const Contact: FC = () => {
               ) : null}
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <button
                 type="submit"
                 disabled={form.status === 'submitting'}

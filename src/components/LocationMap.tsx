@@ -9,11 +9,11 @@ const LocationMap: FC = () => {
   return (
     <div className="overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-[var(--shadow-glass)] backdrop-blur-2xl">
       <div className="flex flex-col gap-3 border-b border-[var(--glass-border)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-        <div className="flex items-start gap-3">
+        <div className="flex min-w-0 items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#00A9FF]/15 text-cyan">
             <MapPinned size={18} />
           </div>
-          <div>
+          <div className="min-w-0">
             <h3 className="text-base font-bold text-[var(--text-primary)]">{t.contact.mapTitle}</h3>
             <p className="mt-0.5 text-xs text-[var(--text-muted)] sm:text-sm">
               {language === 'ar' ? company.addressAr : company.addressEn}
@@ -25,7 +25,7 @@ const LocationMap: FC = () => {
           href={company.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 py-2.5 text-sm font-bold text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)] transition hover:brightness-110"
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 py-2.5 text-sm font-bold text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)] transition hover:brightness-110"
         >
           <Navigation size={15} />
           {t.contact.openMaps}

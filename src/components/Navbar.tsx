@@ -1,7 +1,7 @@
 import { Menu, X } from 'lucide-react'
-import { useEffect, useState, type FC } from 'react'
+import { useEffect, useId, useState, type FC } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import { company, navItems } from '../data/content'
+import { BRAND_NAME, navItems } from '../data/content'
 import BrandLogo from './BrandLogo'
 import LanguageToggle from './LanguageToggle'
 import ThemeToggle from './ThemeToggle'
@@ -10,9 +10,10 @@ const Navbar: FC = () => {
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const drawerId = useId()
 
   useEffect(() => {
-    const onScroll = (): void => setScrolled(window.scrollY > 18)
+    const onScroll = (): void => setScrolled(window.scrollY > 12)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -38,26 +39,26 @@ const Navbar: FC = () => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? 'nav-surface' : 'nav-surface-top'
+        className={`fixed inset-x-0 top-0 z-50 nav-shell ${
+          scrolled ? 'nav-shell-scrolled' : 'nav-shell-top'
         }`}
       >
-        <nav className="container-site flex items-center justify-between gap-2 py-3 sm:gap-3 sm:py-3.5">
+        <nav className="container-site flex h-16 items-center justify-between gap-3 sm:h-[4.25rem]">
           <a
             href="#home"
-            className="relative z-10 min-h-11"
-            aria-label={company.nameEn}
+            className="relative z-10 min-w-0 shrink"
+            aria-label={BRAND_NAME}
             onClick={closeMenu}
           >
             <BrandLogo compact />
           </a>
 
-          <ul className="hidden items-center gap-0.5 lg:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => (
               <li key={item.id}>
                 <a
                   href={item.href}
-                  className="rounded-xl px-3 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--glass-bg)] hover:text-cyan xl:px-3.5"
+                  className="rounded-xl px-3.5 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--glass-bg)] hover:text-cyan"
                 >
                   {t.nav[item.labelKey]}
                 </a>
@@ -65,7 +66,7 @@ const Navbar: FC = () => {
             ))}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <div className="hidden items-center gap-2 sm:flex">
               <LanguageToggle />
               <ThemeToggle />
@@ -78,20 +79,16 @@ const Navbar: FC = () => {
               {t.nav.cta}
             </a>
 
-            {!isOpen ? (
-              <button
-                type="button"
-                className="touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)] backdrop-blur-xl transition hover:border-[var(--glass-border-hover)] lg:hidden"
-                aria-expanded={false}
-                aria-controls="mobile-drawer"
-                aria-label={t.nav.openMenu}
-                onClick={() => setIsOpen(true)}
-              >
-                <Menu size={22} />
-              </button>
-            ) : (
-              <span className="touch-target lg:hidden" aria-hidden="true" />
-            )}
+            <button
+              type="button"
+              className="touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)] backdrop-blur-xl transition hover:border-[var(--glass-border-hover)] lg:hidden"
+              aria-expanded={isOpen}
+              aria-controls={drawerId}
+              aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
+              onClick={() => setIsOpen((prev) => !prev)}
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
         </nav>
       </header>
@@ -100,41 +97,37 @@ const Navbar: FC = () => {
         <div className="fixed inset-0 z-40 lg:hidden" role="dialog" aria-modal="true">
           <button
             type="button"
-            className="absolute inset-0 bg-[var(--bg-deep)]/70 backdrop-blur-md"
+            className="absolute inset-0 bg-[var(--bg-deep)]/65 backdrop-blur-sm"
             aria-label={t.nav.closeMenu}
             onClick={closeMenu}
           />
+
           <aside
-            id="mobile-drawer"
-            className="animate-drawer-in absolute inset-y-0 end-0 flex w-[min(92vw,24rem)] flex-col border-s border-[var(--glass-border)] bg-[var(--bg-base)]/95 shadow-[var(--shadow-glass)] backdrop-blur-2xl"
+            id={drawerId}
+            className="animate-drawer-in absolute inset-y-0 end-0 flex w-[min(92vw,22rem)] flex-col border-s border-[var(--glass-border)] bg-[var(--bg-base)]/96 shadow-[var(--shadow-glass)] backdrop-blur-2xl"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-[var(--glass-border)] px-5 py-4">
-              <p className="font-display text-sm font-semibold tracking-wide text-[var(--text-primary)]">
-                {company.nameEn}
+            <div className="border-b border-[var(--glass-border)] px-5 py-5 pt-20">
+              <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+                {t.nav.menuLabel}
               </p>
-              <button
-                type="button"
-                className="touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)]"
-                aria-label={t.nav.closeMenu}
-                onClick={closeMenu}
-              >
-                <X size={20} />
-              </button>
+              <p className="mt-1 font-display text-base font-bold text-[var(--text-primary)]" dir="ltr">
+                {BRAND_NAME}
+              </p>
             </div>
 
-            <div className="flex flex-1 flex-col overflow-y-auto px-5 py-5">
-              <div className="mb-5 flex gap-2 sm:hidden">
+            <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-5 py-5">
+              <div className="flex gap-2 sm:hidden">
                 <LanguageToggle className="flex-1" />
                 <ThemeToggle className="flex-1 !w-auto" />
               </div>
 
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-1.5">
                 {navItems.map((item) => (
                   <li key={item.id}>
                     <a
                       href={item.href}
                       onClick={closeMenu}
-                      className="flex min-h-14 items-center rounded-2xl border border-transparent px-4 text-base font-semibold text-[var(--text-primary)] transition hover:border-[var(--glass-border-hover)] hover:bg-[var(--glass-bg)] hover:text-cyan"
+                      className="flex min-h-14 items-center rounded-2xl px-4 text-base font-semibold text-[var(--text-primary)] transition hover:bg-[var(--glass-bg)] hover:text-cyan"
                     >
                       {t.nav[item.labelKey]}
                     </a>

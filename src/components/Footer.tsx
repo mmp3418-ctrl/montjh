@@ -1,7 +1,7 @@
 import { Mail, MapPin, Phone } from 'lucide-react'
 import type { FC } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import { company, navItems } from '../data/content'
+import { BRAND_NAME, company, navItems } from '../data/content'
 import BrandLogo from './BrandLogo'
 
 const Footer: FC = () => {
@@ -11,8 +11,8 @@ const Footer: FC = () => {
   return (
     <footer className="border-t border-[var(--glass-border)] bg-[var(--bg-elevated)]/80">
       <div className="container-site section-pad !py-10 sm:!py-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_0.9fr]">
-          <div>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[1.35fr_0.7fr_0.95fr]">
+          <div className="min-w-0">
             <BrandLogo />
             <p className="mt-4 max-w-md text-sm leading-7 text-[var(--text-secondary)]">
               {t.footer.blurb}
@@ -50,7 +50,7 @@ const Footer: FC = () => {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone size={16} className="shrink-0 text-cyan" />
-                <a href="tel:+218214802432" className="hover:text-cyan" dir="ltr">
+                <a href={`tel:${company.phoneTel}`} className="hover:text-cyan" dir="ltr">
                   {company.phone}
                 </a>
               </li>
@@ -70,7 +70,7 @@ const Footer: FC = () => {
 
         <div className="mt-10 border-t border-[var(--glass-border)] pt-6 text-xs text-[var(--text-muted)]">
           <p dir="ltr">
-            © {year} {company.nameEn}. {t.footer.rights}
+            © {year} {BRAND_NAME}. {t.footer.rights}
           </p>
         </div>
       </div>

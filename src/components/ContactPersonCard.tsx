@@ -14,13 +14,13 @@ const ContactPersonCard: FC<ContactPersonCardProps> = ({ person }) => {
 
   return (
     <article className="glass-card group relative overflow-hidden rounded-2xl p-5 hover:-translate-y-1 sm:p-6">
-      <div className="absolute -end-10 -top-10 h-32 w-32 rounded-full bg-[#00A9FF]/15 blur-3xl transition group-hover:bg-[#00A9FF]/25" />
+      <div className="absolute -end-10 -top-10 h-32 w-32 rounded-full bg-[#00A9FF]/12 blur-3xl transition group-hover:bg-[#00A9FF]/22" />
 
       <div className="relative flex items-start gap-4">
         <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-[0_8px_24px_rgba(0,169,255,0.3)]">
           <UserRound size={26} aria-hidden="true" />
         </div>
-        <div>
+        <div className="min-w-0">
           <h3 className="text-xl font-bold text-[var(--text-primary)]">
             {displayName}
             <span className="ms-2 font-display text-sm font-medium text-[var(--text-muted)]">

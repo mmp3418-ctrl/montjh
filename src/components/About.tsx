@@ -1,6 +1,7 @@
 import { Award, Globe2, Target } from 'lucide-react'
 import type { FC } from 'react'
 import { useLanguage } from '../context/LanguageContext'
+import { BRAND_NAME } from '../data/content'
 import SectionHeading from './SectionHeading'
 
 const About: FC = () => {
@@ -15,14 +16,22 @@ const About: FC = () => {
   return (
     <section id="about" className="section-pad relative overflow-hidden">
       <div className="pointer-events-none absolute -start-24 top-10 h-72 w-72 rounded-full bg-[#00A9FF]/10 blur-3xl" />
-      <div className="pointer-events-none absolute -end-20 bottom-0 h-64 w-64 rounded-full bg-[#0047AB]/15 blur-3xl" />
+      <div className="pointer-events-none absolute -end-20 bottom-0 h-64 w-64 rounded-full bg-[#0047AB]/12 blur-3xl" />
 
       <div className="container-site relative grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div>
+        <div className="min-w-0">
           <SectionHeading
             align="start"
             eyebrow={t.about.eyebrow}
-            title={t.about.title}
+            title={
+              <>
+                <span className="font-display" dir="ltr">
+                  {BRAND_NAME}
+                </span>
+                <span className="mx-1.5 text-[var(--text-muted)]">—</span>
+                <span>{t.about.title}</span>
+              </>
+            }
             description={t.about.p1}
           />
 
@@ -42,17 +51,17 @@ const About: FC = () => {
           </ul>
         </div>
 
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="animate-float absolute -inset-3 rounded-[2rem] bg-brand-gradient opacity-20 blur-2xl" />
           <div className="relative overflow-hidden rounded-[1.75rem] border border-[var(--glass-border)] bg-[var(--glass-bg)] p-1.5 shadow-[var(--shadow-glass)] backdrop-blur-2xl">
             <img
               src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=80"
-              alt={t.about.title}
-              className="h-64 w-full rounded-[1.4rem] object-cover sm:h-80 md:h-96"
+              alt={BRAND_NAME}
+              className="h-64 w-full rounded-[1.4rem] object-cover sm:h-80 md:h-[26rem]"
               loading="lazy"
             />
-            <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-white/15 bg-navy/75 px-4 py-3.5 backdrop-blur-2xl sm:inset-x-5 sm:px-5 sm:py-4">
-              <p className="font-display text-[10px] tracking-[0.22em] text-cyan uppercase sm:text-xs">
+            <div className="absolute inset-x-3 bottom-3 rounded-2xl border border-white/15 bg-navy/78 px-4 py-3.5 backdrop-blur-2xl sm:inset-x-5 sm:px-5 sm:py-4">
+              <p className="font-display text-[10px] tracking-[0.18em] text-cyan uppercase sm:text-xs">
                 {t.about.cardCaption}
               </p>
               <p className="mt-1 text-sm font-semibold text-white sm:text-base">
