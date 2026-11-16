@@ -12,11 +12,11 @@ const SectionHeading: FC<SectionHeadingProps> = ({
   return (
     <div className={`max-w-2xl ${alignment}`}>
       <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">{eyebrow}</p>
-      <h2 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
+      <h2 className="text-3xl font-extrabold leading-tight text-[var(--text-primary)] sm:text-4xl">
         {title}
       </h2>
       {description ? (
-        <p className="mt-4 text-sm leading-7 text-white/65 sm:text-base sm:leading-8">
+        <p className="mt-4 text-sm leading-7 text-[var(--text-secondary)] sm:text-base sm:leading-8">
           {description}
         </p>
       ) : null}

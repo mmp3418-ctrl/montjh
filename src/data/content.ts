@@ -2,7 +2,7 @@ import type {
   ClubFeature,
   CompanyInfo,
   ContactPerson,
-  GalleryCategory,
+  GalleryCategoryId,
   GalleryItem,
   NavItem,
   ServiceItem,
@@ -10,8 +10,10 @@ import type {
 
 export const company: CompanyInfo = {
   nameAr: 'شركة مدينة الحدائق ذ.م.م',
-  nameEn: 'Garden City Company LLC',
-  tagline: 'Tourism Investment Cooperation',
+  nameEn: 'Garden City Company L.L.C',
+  legalSuffix: 'L.L.C',
+  taglineAr: 'التعاون الاستثماري السياحي',
+  taglineEn: 'Tourism Investment Cooperation',
   clubName: 'Begonia Club',
   website: 'www.begonia.com.ly',
   addressAr: 'طريق المطار، سيدي صليم، طرابلس - ليبيا',
@@ -26,173 +28,131 @@ export const company: CompanyInfo = {
 }
 
 export const navItems: NavItem[] = [
-  { id: 'home', label: 'الرئيسية', href: '#home' },
-  { id: 'about', label: 'من نحن', href: '#about' },
-  { id: 'investments', label: 'الاستثمارات', href: '#investments' },
-  { id: 'club', label: 'نادي بيغونيا', href: '#club' },
-  { id: 'gallery', label: 'المعرض', href: '#gallery' },
-  { id: 'contact', label: 'تواصل معنا', href: '#contact' },
+  { id: 'home', href: '#home', labelKey: 'home' },
+  { id: 'about', href: '#about', labelKey: 'about' },
+  { id: 'investments', href: '#investments', labelKey: 'investments' },
+  { id: 'club', href: '#club', labelKey: 'club' },
+  { id: 'gallery', href: '#gallery', labelKey: 'gallery' },
+  { id: 'contact', href: '#contact', labelKey: 'contact' },
 ]
 
 export const services: ServiceItem[] = [
-  {
-    id: 'hospitality',
-    title: 'الضيافة والفنادق',
-    description:
-      'شراكات استثمارية في مشاريع الضيافة الفاخرة وتطوير الوجهات السياحية بمعايير عالمية.',
-    icon: 'hotel',
-  },
-  {
-    id: 'travel',
-    title: 'السفر والتجارب',
-    description:
-      'تصميم تجارب سياحية متكاملة تربط الزائر بالثقافة الليبية والمناظر المتوسطية الفريدة.',
-    icon: 'plane',
-  },
+  { id: 'hospitality', icon: 'hotel', titleKey: 'hospitality', descriptionKey: 'hospitality' },
+  { id: 'travel', icon: 'plane', titleKey: 'travel', descriptionKey: 'travel' },
   {
     id: 'real-estate',
-    title: 'العقارات السياحية',
-    description:
-      'تطوير مجمعات ومنتجعات سياحية تعزز القيمة الاستثمارية وتدعم النمو المستدام.',
     icon: 'landmark',
+    titleKey: 'real-estate',
+    descriptionKey: 'real-estate',
   },
   {
     id: 'partnerships',
-    title: 'شراكات استراتيجية',
-    description:
-      'نتعاون مع مستثمرين محليين ودوليين لبناء منظومة سياحية مترابطة وقابلة للتوسع.',
     icon: 'handshake',
+    titleKey: 'partnerships',
+    descriptionKey: 'partnerships',
   },
-  {
-    id: 'destination',
-    title: 'تطوير الوجهات',
-    description:
-      'إعادة تخيل المساحات الحضرية والطبيعية كوجهات سياحية جاذبة للاستثمار والزيارة.',
-    icon: 'tree',
-  },
-  {
-    id: 'advisory',
-    title: 'الاستشارات السياحية',
-    description:
-      'دراسات جدوى وخطط تشغيل واستشارات استثمارية لدعم قرارات الشركاء بثقة ووضوح.',
-    icon: 'compass',
-  },
+  { id: 'destination', icon: 'tree', titleKey: 'destination', descriptionKey: 'destination' },
+  { id: 'advisory', icon: 'compass', titleKey: 'advisory', descriptionKey: 'advisory' },
 ]
 
 export const clubFeatures: ClubFeature[] = [
-  {
-    id: 'exclusive',
-    title: 'عضوية حصرية',
-    description: 'تجربة نادي راقية مخصصة للنخبة من الأعضاء والشركاء الاستثماريين.',
-  },
-  {
-    id: 'ambiance',
-    title: 'أجواء فاخرة',
-    description: 'تصميم معاصر، تفاصيل دقيقة، ومساحات استقبال تعكس هوية بيغونيا.',
-  },
-  {
-    id: 'networking',
-    title: 'شبكة علاقات',
-    description: 'منصة للتواصل بين رجال الأعمال والمستثمرين في قطاع السياحة والضيافة.',
-  },
-  {
-    id: 'events',
-    title: 'فعاليات خاصة',
-    description: 'أمسيات ولقاءات مصممة لتعزيز الشراكات وعرض الفرص الاستثمارية.',
-  },
+  { id: 'exclusive', titleKey: 'exclusive', descriptionKey: 'exclusive' },
+  { id: 'ambiance', titleKey: 'ambiance', descriptionKey: 'ambiance' },
+  { id: 'networking', titleKey: 'networking', descriptionKey: 'networking' },
+  { id: 'events', titleKey: 'events', descriptionKey: 'events' },
 ]
 
-export const galleryCategories: GalleryCategory[] = [
-  'الكل',
-  'وجهات',
-  'نادي بيغونيا',
-  'استثمار',
-  'ضيافة',
-  'عمارة',
+export const galleryCategoryIds: GalleryCategoryId[] = [
+  'all',
+  'destinations',
+  'club',
+  'investment',
+  'hospitality',
+  'architecture',
 ]
 
 export const galleryItems: GalleryItem[] = [
   {
     id: 'g1',
-    title: 'أفق المتوسط',
-    category: 'وجهات',
+    titleKey: 'g1',
+    category: 'destinations',
     imageUrl:
       'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80',
-    alt: 'شاطئ متوسطي عند الغروب',
+    altKey: 'g1',
   },
   {
     id: 'g2',
-    title: 'ردهة النادي',
-    category: 'نادي بيغونيا',
+    titleKey: 'g2',
+    category: 'club',
     imageUrl:
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
-    alt: 'ردهة فندقية فاخرة',
+    altKey: 'g2',
   },
   {
     id: 'g3',
-    title: 'حدائق استثمارية',
-    category: 'استثمار',
+    titleKey: 'g3',
+    category: 'investment',
     imageUrl:
       'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1400&q=80',
-    alt: 'حديقة خضراء منسقة',
+    altKey: 'g3',
   },
   {
     id: 'g4',
-    title: 'تجربة ضيافة',
-    category: 'ضيافة',
+    titleKey: 'g4',
+    category: 'hospitality',
     imageUrl:
       'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80',
-    alt: 'منتجع فاخر بإطلالة مائية',
+    altKey: 'g4',
   },
   {
     id: 'g5',
-    title: 'ممرات معمارية',
-    category: 'عمارة',
+    titleKey: 'g5',
+    category: 'architecture',
     imageUrl:
       'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=80',
-    alt: 'ممر معماري فاخر',
+    altKey: 'g5',
   },
   {
     id: 'g6',
-    title: 'أمسية النادي',
-    category: 'نادي بيغونيا',
+    titleKey: 'g6',
+    category: 'club',
     imageUrl:
       'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80',
-    alt: 'قاعة مطعم راقية مضاءة',
+    altKey: 'g6',
   },
   {
     id: 'g7',
-    title: 'إطلالة ساحلية',
-    category: 'وجهات',
+    titleKey: 'g7',
+    category: 'destinations',
     imageUrl:
       'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1400&q=80',
-    alt: 'ساحل متوسطي صافٍ',
+    altKey: 'g7',
   },
   {
     id: 'g8',
-    title: 'قاعة الاستقبال',
-    category: 'ضيافة',
+    titleKey: 'g8',
+    category: 'hospitality',
     imageUrl:
       'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=80',
-    alt: 'قاعة استقبال فندقية فاخرة',
+    altKey: 'g8',
   },
 ]
 
 export const contactPersons: ContactPerson[] = [
   {
     id: 'mounir',
-    name: 'منير',
+    nameAr: 'منير',
     nameEn: 'Mounir',
-    role: 'الإدارة المباشرة',
+    roleKey: 'directManagement',
     phone: '0910151188',
     phoneDisplay: '0910 151 188',
     whatsapp: '218910151188',
   },
   {
     id: 'khaled',
-    name: 'خالد',
+    nameAr: 'خالد',
     nameEn: 'Khaled',
-    role: 'الإدارة المباشرة',
+    roleKey: 'directManagement',
     phone: '0912153950',
     phoneDisplay: '0912 153 950',
     whatsapp: '218912153950',

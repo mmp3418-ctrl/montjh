@@ -1,8 +1,11 @@
-import { ArrowLeft, Building2, Sparkles } from 'lucide-react'
+import { ArrowRight, Building2, Sparkles } from 'lucide-react'
 import type { FC } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 import { company } from '../data/content'
 
 const Hero: FC = () => {
+  const { t, language } = useLanguage()
+
   return (
     <section
       id="home"
@@ -10,7 +13,7 @@ const Hero: FC = () => {
     >
       <div className="absolute inset-0 bg-navy" />
       <div
-        className="absolute inset-0 opacity-50"
+        className="absolute inset-0 opacity-55"
         style={{
           backgroundImage:
             'url(https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1920&q=80)',
@@ -18,40 +21,37 @@ const Hero: FC = () => {
           backgroundPosition: 'center',
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-navy via-navy/85 to-navy" />
-      <div className="absolute inset-0 bg-gradient-to-l from-[#0047AB]/35 via-transparent to-navy/90" />
+      <div className="absolute inset-0" style={{ background: 'var(--hero-overlay)' }} />
+      <div className="absolute inset-0 bg-gradient-to-l from-[#0047AB]/30 via-transparent to-navy/80" />
 
       <div className="animate-pulse-glow pointer-events-none absolute -start-20 top-24 h-72 w-72 rounded-full bg-[#00A9FF]/25 blur-[100px]" />
       <div className="animate-pulse-glow pointer-events-none absolute -end-16 bottom-24 h-80 w-80 rounded-full bg-[#0078D7]/20 blur-[110px]" />
-      <div className="pointer-events-none absolute start-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full bg-[#0047AB]/15 blur-[90px]" />
 
       <div className="relative container-site w-full">
         <div className="animate-fade-up mb-5 flex flex-wrap gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-[11px] font-semibold text-cyan backdrop-blur-xl sm:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur-xl sm:text-xs">
             <Building2 size={13} />
-            {company.nameEn}
+            {t.hero.badgeCompany}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00A9FF]/30 bg-[#00A9FF]/10 px-3 py-1.5 text-[11px] font-semibold text-cyan backdrop-blur-xl sm:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00A9FF]/40 bg-[#00A9FF]/15 px-3 py-1.5 text-[11px] font-semibold text-cyan backdrop-blur-xl sm:text-xs">
             <Sparkles size={13} />
-            {company.clubName} · VIP
+            {t.hero.badgeClub}
           </span>
         </div>
 
-        <p className="animate-fade-up mb-3 font-display text-[11px] font-semibold tracking-[0.28em] text-cyan/90 uppercase sm:text-xs">
-          {company.tagline}
+        <p className="animate-fade-up mb-3 font-display text-[11px] font-semibold tracking-[0.22em] text-cyan/95 uppercase sm:text-xs">
+          {language === 'ar' ? company.taglineAr : company.taglineEn}
         </p>
 
         <h1 className="animate-fade-up-delay max-w-3xl text-4xl font-extrabold leading-[1.15] text-white sm:text-5xl md:text-6xl">
-          <span className="block">{company.nameAr}</span>
+          <span className="block">{t.hero.headline}</span>
           <span className="mt-2 block text-gradient text-[0.68em] sm:text-[0.65em]">
-            استثمار سياحي راقٍ بهوية بيغونيا
+            {t.hero.subheadline}
           </span>
         </h1>
 
-        <p className="animate-fade-up-delay-2 mt-5 max-w-xl text-sm leading-8 text-white/70 sm:text-base sm:leading-8 md:text-lg">
-          نطوّر وجهات سياحية استثنائية ونقدّم عبر نادي بيغونيا تجربة عضوية حصرية
-          تجمع الفخامة، الشراكات الاستراتيجية، والضيافة بمعايير عالمية في قلب
-          طرابلس.
+        <p className="animate-fade-up-delay-2 mt-5 max-w-xl text-sm leading-8 text-white/75 sm:text-base md:text-lg">
+          {t.hero.description}
         </p>
 
         <div className="animate-fade-up-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -59,14 +59,17 @@ const Hero: FC = () => {
             href="#investments"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_32px_rgba(0,169,255,0.28)] transition hover:brightness-110"
           >
-            استكشف الاستثمارات
-            <ArrowLeft size={16} className="opacity-80" />
+            {t.hero.ctaPrimary}
+            <ArrowRight
+              size={16}
+              className={`opacity-80 ${language === 'ar' ? 'rotate-180' : ''}`}
+            />
           </a>
           <a
             href="#club"
-            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl transition hover:border-[#00A9FF]/50 hover:bg-white/[0.08]"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.25)] backdrop-blur-2xl transition hover:border-[#00A9FF]/50 hover:bg-white/15"
           >
-            اكتشف نادي بيغونيا
+            {t.hero.ctaSecondary}
           </a>
         </div>
       </div>

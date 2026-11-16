@@ -1,25 +1,23 @@
-# Begonia Club · Garden City Company LLC
+# Garden City Company L.L.C · Begonia Club
 
-موقع ويب حديث لشركة مدينة الحدائق ذ.م.م (التعاون الاستثماري السياحي) ونادي بيغونيا.
+Production web app for **Garden City Company L.L.C** (Tourism Investment Cooperation) and its flagship project **Begonia Club**.
 
-## التشغيل
+## Features
+
+- Dark / Light theme with localStorage persistence
+- Arabic (RTL) / English (LTR) i18n
+- Glassmorphism UI, mobile-first navigation drawer
+- Validated contact form, management cards, Google Maps embed
+
+## Scripts
 
 ```bash
 npm install
 npm run dev
-```
-
-## البناء للإنتاج
-
-```bash
 npm run build
 npm run preview
 ```
 
-## التقنيات
+## Stack
 
-- React 19 + TypeScript (strict)
-- Vite
-- Tailwind CSS v4
-- Lucide Icons
-- تخطيط عربي RTL كامل
+React 19 · TypeScript (strict) · Vite · Tailwind CSS v4 · Lucide

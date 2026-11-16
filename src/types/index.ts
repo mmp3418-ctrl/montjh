@@ -1,37 +1,54 @@
+export type ThemeMode = 'dark' | 'light'
+export type Language = 'ar' | 'en'
+
+export type NavLabelKey =
+  | 'home'
+  | 'about'
+  | 'investments'
+  | 'club'
+  | 'gallery'
+  | 'contact'
+
 export interface NavItem {
   id: string
-  label: string
   href: string
+  labelKey: NavLabelKey
 }
 
 export interface ServiceItem {
   id: string
-  title: string
-  description: string
   icon: 'hotel' | 'plane' | 'landmark' | 'handshake' | 'tree' | 'compass'
+  titleKey: string
+  descriptionKey: string
 }
 
 export interface ClubFeature {
   id: string
-  title: string
-  description: string
+  titleKey: string
+  descriptionKey: string
 }
 
-export type GalleryCategory = 'الكل' | 'وجهات' | 'نادي بيغونيا' | 'استثمار' | 'ضيافة' | 'عمارة'
+export type GalleryCategoryId =
+  | 'all'
+  | 'destinations'
+  | 'club'
+  | 'investment'
+  | 'hospitality'
+  | 'architecture'
 
 export interface GalleryItem {
   id: string
-  title: string
-  category: Exclude<GalleryCategory, 'الكل'>
+  titleKey: string
+  category: Exclude<GalleryCategoryId, 'all'>
   imageUrl: string
-  alt: string
+  altKey: string
 }
 
 export interface ContactPerson {
   id: string
-  name: string
+  nameAr: string
   nameEn: string
-  role: string
+  roleKey: string
   phone: string
   phoneDisplay: string
   whatsapp: string
@@ -40,7 +57,9 @@ export interface ContactPerson {
 export interface CompanyInfo {
   nameAr: string
   nameEn: string
-  tagline: string
+  legalSuffix: string
+  taglineAr: string
+  taglineEn: string
   clubName: string
   website: string
   addressAr: string

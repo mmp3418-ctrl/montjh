@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState, type ChangeEvent, type FC, type FormEvent } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 import { company, contactPersons } from '../data/content'
 import type { ContactFormData, ContactFormState } from '../types'
 import { hasFormErrors, validateContactForm } from '../utils/validation'
@@ -16,6 +17,7 @@ const initialValues: ContactFormData = {
 }
 
 const Contact: FC = () => {
+  const { t, language } = useLanguage()
   const [form, setForm] = useState<ContactFormState>({
     values: initialValues,
     errors: {},
@@ -38,7 +40,7 @@ const Contact: FC = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    const errors = validateContactForm(form.values)
+    const errors = validateContactForm(form.values, t.contact.errors)
 
     if (hasFormErrors(errors)) {
       setForm((prev) => ({ ...prev, errors, status: 'error' }))
@@ -51,7 +53,7 @@ const Contact: FC = () => {
       const mailto = `mailto:${company.email}?subject=${encodeURIComponent(
         form.values.subject,
       )}&body=${encodeURIComponent(
-        `الاسم: ${form.values.name}\nالهاتف: ${form.values.phone}\nالبريد: ${form.values.email}\n\n${form.values.message}`,
+        `${t.contact.formName}: ${form.values.name}\n${t.contact.formPhone}: ${form.values.phone}\n${t.contact.formEmail}: ${form.values.email}\n\n${form.values.message}`,
       )}`
 
       window.location.href = mailto
@@ -65,17 +67,17 @@ const Contact: FC = () => {
   }
 
   const fieldClass =
-    'w-full min-h-12 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#00A9FF]/50 focus:bg-white/[0.07] focus:ring-2 focus:ring-[#00A9FF]/20'
+    'w-full min-h-12 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[var(--glass-border-hover)] focus:ring-2 focus:ring-[#00A9FF]/20'
 
   return (
     <section id="contact" className="section-pad relative overflow-hidden">
-      <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#0078D7]/12 blur-3xl" />
+      <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#0078D7]/10 blur-3xl" />
 
       <div className="container-site relative">
         <SectionHeading
-          eyebrow="تواصل معنا"
-          title="نحن هنا لبناء شراكتك القادمة"
-          description="تواصل مع الإدارة مباشرة، حدّد موقعنا على الخريطة، أو أرسل رسالتك عبر النموذج."
+          eyebrow={t.contact.eyebrow}
+          title={t.contact.title}
+          description={t.contact.description}
         />
 
         <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -89,38 +91,38 @@ const Contact: FC = () => {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
-          <aside className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl sm:p-7">
-            <h3 className="text-xl font-bold text-white">معلومات الشركة</h3>
+          <aside className="glass space-y-4 rounded-2xl p-5 sm:p-7">
+            <h3 className="text-xl font-bold text-[var(--text-primary)]">
+              {t.contact.companyInfo}
+            </h3>
 
-            <div className="flex items-start gap-3 text-sm leading-7 text-white/70">
+            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
               <MapPin className="mt-1 shrink-0 text-cyan" size={18} />
               <div>
-                <p className="font-semibold text-white">العنوان</p>
-                <p>{company.addressAr}</p>
-                <p className="mt-1 text-white/45" dir="ltr">
-                  {company.addressEn}
+                <p className="font-semibold text-[var(--text-primary)]">{t.contact.address}</p>
+                <p>{language === 'ar' ? company.addressAr : company.addressEn}</p>
+                <p className="mt-1 text-[var(--text-muted)]" dir="ltr">
+                  {language === 'ar' ? company.addressEn : company.addressAr}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 text-sm leading-7 text-white/70">
+            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
               <Phone className="mt-1 shrink-0 text-cyan" size={18} />
               <div>
-                <p className="font-semibold text-white">هاتف وفاكس</p>
-                <a
-                  href="tel:+218214802432"
-                  className="transition hover:text-cyan"
-                  dir="ltr"
-                >
+                <p className="font-semibold text-[var(--text-primary)]">{t.contact.phoneFax}</p>
+                <a href="tel:+218214802432" className="transition hover:text-cyan" dir="ltr">
                   {company.phone}
                 </a>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 text-sm leading-7 text-white/70">
+            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
               <Mail className="mt-1 shrink-0 text-cyan" size={18} />
               <div>
-                <p className="font-semibold text-white">البريد الرسمي</p>
+                <p className="font-semibold text-[var(--text-primary)]">
+                  {t.contact.officialEmail}
+                </p>
                 <a
                   href={`mailto:${company.email}`}
                   className="transition hover:text-cyan"
@@ -132,7 +134,7 @@ const Contact: FC = () => {
             </div>
 
             <div className="rounded-xl border border-[#00A9FF]/25 bg-[#00A9FF]/08 px-4 py-3">
-              <p className="text-xs text-white/50">الموقع الرسمي</p>
+              <p className="text-xs text-[var(--text-muted)]">{t.contact.website}</p>
               <a
                 href={`https://${company.website}`}
                 target="_blank"
@@ -148,13 +150,16 @@ const Contact: FC = () => {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl sm:p-7"
-            aria-label="نموذج التواصل"
+            className="glass rounded-2xl p-5 sm:p-7"
+            aria-label={t.contact.title}
           >
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="name" className="mb-2 block text-sm font-medium text-white/80">
-                  الاسم الكامل
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-[var(--text-secondary)]"
+                >
+                  {t.contact.formName}
                 </label>
                 <input
                   id="name"
@@ -164,17 +169,20 @@ const Contact: FC = () => {
                   value={form.values.name}
                   onChange={handleChange}
                   className={fieldClass}
-                  placeholder="أدخل اسمك"
+                  placeholder={t.contact.formNamePh}
                   aria-invalid={Boolean(form.errors.name)}
                 />
                 {form.errors.name ? (
-                  <p className="mt-1.5 text-xs text-red-300">{form.errors.name}</p>
+                  <p className="mt-1.5 text-xs text-red-500">{form.errors.name}</p>
                 ) : null}
               </div>
 
               <div>
-                <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/80">
-                  البريد الإلكتروني
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-medium text-[var(--text-secondary)]"
+                >
+                  {t.contact.formEmail}
                 </label>
                 <input
                   id="email"
@@ -189,13 +197,16 @@ const Contact: FC = () => {
                   aria-invalid={Boolean(form.errors.email)}
                 />
                 {form.errors.email ? (
-                  <p className="mt-1.5 text-xs text-red-300">{form.errors.email}</p>
+                  <p className="mt-1.5 text-xs text-red-500">{form.errors.email}</p>
                 ) : null}
               </div>
 
               <div>
-                <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white/80">
-                  رقم الهاتف
+                <label
+                  htmlFor="phone"
+                  className="mb-2 block text-sm font-medium text-[var(--text-secondary)]"
+                >
+                  {t.contact.formPhone}
                 </label>
                 <input
                   id="phone"
@@ -205,18 +216,21 @@ const Contact: FC = () => {
                   value={form.values.phone}
                   onChange={handleChange}
                   className={fieldClass}
-                  placeholder="09xxxxxxxx"
+                  placeholder={t.contact.formPhonePh}
                   dir="ltr"
                   aria-invalid={Boolean(form.errors.phone)}
                 />
                 {form.errors.phone ? (
-                  <p className="mt-1.5 text-xs text-red-300">{form.errors.phone}</p>
+                  <p className="mt-1.5 text-xs text-red-500">{form.errors.phone}</p>
                 ) : null}
               </div>
 
               <div>
-                <label htmlFor="subject" className="mb-2 block text-sm font-medium text-white/80">
-                  الموضوع
+                <label
+                  htmlFor="subject"
+                  className="mb-2 block text-sm font-medium text-[var(--text-secondary)]"
+                >
+                  {t.contact.formSubject}
                 </label>
                 <input
                   id="subject"
@@ -225,18 +239,21 @@ const Contact: FC = () => {
                   value={form.values.subject}
                   onChange={handleChange}
                   className={fieldClass}
-                  placeholder="موضوع الرسالة"
+                  placeholder={t.contact.formSubjectPh}
                   aria-invalid={Boolean(form.errors.subject)}
                 />
                 {form.errors.subject ? (
-                  <p className="mt-1.5 text-xs text-red-300">{form.errors.subject}</p>
+                  <p className="mt-1.5 text-xs text-red-500">{form.errors.subject}</p>
                 ) : null}
               </div>
             </div>
 
             <div className="mt-4">
-              <label htmlFor="message" className="mb-2 block text-sm font-medium text-white/80">
-                الرسالة
+              <label
+                htmlFor="message"
+                className="mb-2 block text-sm font-medium text-[var(--text-secondary)]"
+              >
+                {t.contact.formMessage}
               </label>
               <textarea
                 id="message"
@@ -245,11 +262,11 @@ const Contact: FC = () => {
                 value={form.values.message}
                 onChange={handleChange}
                 className={`${fieldClass} resize-y`}
-                placeholder="اكتب تفاصيل استفسارك أو عرض الشراكة..."
+                placeholder={t.contact.formMessagePh}
                 aria-invalid={Boolean(form.errors.message)}
               />
               {form.errors.message ? (
-                <p className="mt-1.5 text-xs text-red-300">{form.errors.message}</p>
+                <p className="mt-1.5 text-xs text-red-500">{form.errors.message}</p>
               ) : null}
             </div>
 
@@ -260,18 +277,18 @@ const Contact: FC = () => {
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,169,255,0.25)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <Send size={16} />
-                {form.status === 'submitting' ? 'جاري الإرسال...' : 'إرسال الرسالة'}
+                {form.status === 'submitting' ? t.contact.formSubmitting : t.contact.formSubmit}
               </button>
 
               {form.status === 'success' ? (
                 <p className="text-sm font-medium text-cyan" role="status">
-                  تم تجهيز رسالتك بنجاح. سيُفتح تطبيق البريد لإكمال الإرسال.
+                  {t.contact.formSuccess}
                 </p>
               ) : null}
 
               {form.status === 'error' ? (
-                <p className="text-sm font-medium text-red-300" role="alert">
-                  يرجى تصحيح الحقول المطلوبة قبل الإرسال.
+                <p className="text-sm font-medium text-red-500" role="alert">
+                  {t.contact.formError}
                 </p>
               ) : null}
             </div>
