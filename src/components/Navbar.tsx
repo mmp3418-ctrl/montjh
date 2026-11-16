@@ -9,15 +9,7 @@ import ThemeToggle from './ThemeToggle'
 const Navbar: FC = () => {
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const drawerId = useId()
-
-  useEffect(() => {
-    const onScroll = (): void => setScrolled(window.scrollY > 12)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -38,15 +30,11 @@ const Navbar: FC = () => {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 nav-shell ${
-          scrolled ? 'nav-shell-scrolled' : 'nav-shell-top'
-        }`}
-      >
-        <nav className="container-site flex h-16 items-center justify-between gap-3 sm:h-[4.25rem]">
+      <header className="nav-shell fixed inset-x-0 top-0 z-50">
+        <nav className="container-site flex h-16 items-center justify-between gap-3 sm:h-[4.5rem] sm:gap-4">
           <a
             href="#home"
-            className="relative z-10 min-w-0 shrink"
+            className="relative z-10 flex min-w-0 max-w-[58%] items-center sm:max-w-none"
             aria-label={BRAND_NAME}
             onClick={closeMenu}
           >
@@ -66,7 +54,7 @@ const Navbar: FC = () => {
             ))}
           </ul>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             <div className="hidden items-center gap-2 sm:flex">
               <LanguageToggle />
               <ThemeToggle />
@@ -81,7 +69,7 @@ const Navbar: FC = () => {
 
             <button
               type="button"
-              className="touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)] backdrop-blur-xl transition hover:border-[var(--glass-border-hover)] lg:hidden"
+              className="nav-control touch-target inline-flex items-center justify-center rounded-xl text-[var(--text-primary)] transition hover:border-[var(--glass-border-hover)] lg:hidden"
               aria-expanded={isOpen}
               aria-controls={drawerId}
               aria-label={isOpen ? t.nav.closeMenu : t.nav.openMenu}
@@ -110,7 +98,10 @@ const Navbar: FC = () => {
               <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
                 {t.nav.menuLabel}
               </p>
-              <p className="mt-1 font-display text-base font-bold text-[var(--text-primary)]" dir="ltr">
+              <p
+                className="mt-1 font-display text-base font-bold text-[var(--text-primary)]"
+                dir="ltr"
+              >
                 {BRAND_NAME}
               </p>
             </div>

@@ -19,7 +19,7 @@ const ThemeToggle: FC<ThemeToggleProps> = ({ floating = false, className = '' })
       onClick={toggleTheme}
       aria-label={isDark ? t.a11y.lightMode : t.a11y.darkMode}
       title={t.a11y.toggleTheme}
-      className={`touch-target inline-flex items-center justify-center rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] text-[var(--text-primary)] backdrop-blur-xl transition hover:border-[var(--glass-border-hover)] ${
+      className={`nav-control touch-target inline-flex items-center justify-center rounded-xl text-[var(--text-primary)] transition hover:border-[var(--glass-border-hover)] ${
         floating
           ? 'fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] end-[max(1.25rem,env(safe-area-inset-right))] z-40 h-12 w-12 shadow-[var(--shadow-glass)]'
           : 'h-11 w-11'
