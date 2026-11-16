@@ -1,7 +1,7 @@
 import type { CompanyInfo, ContactPerson, NavItem, ServiceItem } from '../types'
 
 export const company: CompanyInfo = {
-  nameAr: 'شركة جاردن سيتي ذ.م.م',
+  nameAr: 'Garden City L.L.C',
   nameEn: 'Garden City L.L.C',
   taglineAr: 'التعاون الاستثماري السياحي',
   taglineEn: 'Tourism Investment Cooperation',

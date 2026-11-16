@@ -69,6 +69,34 @@ const Contact: FC = () => {
   const fieldClass =
     'w-full min-h-12 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[var(--glass-border-hover)] focus:ring-2 focus:ring-[#00A9FF]/20'
 
+  const infoCards = [
+    {
+      id: 'address',
+      icon: MapPin,
+      label: t.contact.address,
+      primary: language === 'ar' ? company.addressAr : company.addressEn,
+      secondary: language === 'ar' ? company.addressEn : company.addressAr,
+      href: company.mapsUrl,
+      external: true,
+    },
+    {
+      id: 'phone',
+      icon: Phone,
+      label: t.contact.phoneFax,
+      primary: company.phone,
+      href: 'tel:+218214802432',
+      ltr: true,
+    },
+    {
+      id: 'email',
+      icon: Mail,
+      label: t.contact.officialEmail,
+      primary: company.email,
+      href: `mailto:${company.email}`,
+      ltr: true,
+    },
+  ] as const
+
   return (
     <section id="contact" className="section-pad relative overflow-hidden">
       <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#0078D7]/10 blur-3xl" />
@@ -90,67 +118,42 @@ const Contact: FC = () => {
           <LocationMap />
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
-          <aside className="glass space-y-4 rounded-2xl p-5 sm:p-7">
-            <h3 className="text-xl font-bold text-[var(--text-primary)]">
-              {t.contact.companyInfo}
-            </h3>
-
-            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
-              <MapPin className="mt-1 shrink-0 text-cyan" size={18} />
-              <div>
-                <p className="font-semibold text-[var(--text-primary)]">{t.contact.address}</p>
-                <p>{language === 'ar' ? company.addressAr : company.addressEn}</p>
-                <p className="mt-1 text-[var(--text-muted)]" dir="ltr">
-                  {language === 'ar' ? company.addressEn : company.addressAr}
-                </p>
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {infoCards.map((card) => (
+            <a
+              key={card.id}
+              href={card.href}
+              {...('external' in card && card.external
+                ? { target: '_blank', rel: 'noreferrer' }
+                : {})}
+              className="glass-card group rounded-2xl p-5 transition hover:-translate-y-1 sm:p-6"
+            >
+              <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white shadow-[0_8px_20px_rgba(0,169,255,0.22)]">
+                <card.icon size={18} aria-hidden="true" />
               </div>
-            </div>
-
-            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
-              <Phone className="mt-1 shrink-0 text-cyan" size={18} />
-              <div>
-                <p className="font-semibold text-[var(--text-primary)]">{t.contact.phoneFax}</p>
-                <a href="tel:+218214802432" className="transition hover:text-cyan" dir="ltr">
-                  {company.phone}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 text-sm leading-7 text-[var(--text-secondary)]">
-              <Mail className="mt-1 shrink-0 text-cyan" size={18} />
-              <div>
-                <p className="font-semibold text-[var(--text-primary)]">
-                  {t.contact.officialEmail}
-                </p>
-                <a
-                  href={`mailto:${company.email}`}
-                  className="transition hover:text-cyan"
-                  dir="ltr"
-                >
-                  {company.email}
-                </a>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-[#00A9FF]/25 bg-[#00A9FF]/08 px-4 py-3">
-              <p className="text-xs text-[var(--text-muted)]">{t.contact.website}</p>
-              <a
-                href={`https://${company.website}`}
-                target="_blank"
-                rel="noreferrer"
-                className="font-display text-lg font-semibold text-cyan"
-                dir="ltr"
+              <p className="text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+                {card.label}
+              </p>
+              <p
+                className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)] transition group-hover:text-cyan sm:text-[15px]"
+                dir={'ltr' in card && card.ltr ? 'ltr' : undefined}
               >
-                {company.website}
-              </a>
-            </div>
-          </aside>
+                {card.primary}
+              </p>
+              {'secondary' in card && card.secondary ? (
+                <p className="mt-1 text-xs leading-6 text-[var(--text-muted)]" dir="ltr">
+                  {card.secondary}
+                </p>
+              ) : null}
+            </a>
+          ))}
+        </div>
 
+        <div className="mt-8">
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="glass rounded-2xl p-5 sm:p-7"
+            className="glass mx-auto max-w-4xl rounded-2xl p-5 sm:p-7"
             aria-label={t.contact.title}
           >
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

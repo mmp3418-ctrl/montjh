@@ -3,7 +3,6 @@ import type { Language } from '../types'
 export interface Dictionary {
   brand: {
     company: string
-    companyShort: string
     tagline: string
   }
   nav: {
@@ -59,7 +58,6 @@ export interface Dictionary {
     address: string
     phoneFax: string
     officialEmail: string
-    website: string
     mapTitle: string
     openMaps: string
     call: string
@@ -105,8 +103,7 @@ export interface Dictionary {
 export const translations: Record<Language, Dictionary> = {
   ar: {
     brand: {
-      company: 'جاردن سيتي ذ.م.م',
-      companyShort: 'جاردن سيتي',
+      company: 'Garden City L.L.C',
       tagline: 'التعاون الاستثماري السياحي',
     },
     nav: {
@@ -121,7 +118,7 @@ export const translations: Record<Language, Dictionary> = {
     hero: {
       badgeCompany: 'Garden City L.L.C',
       badgeSector: 'استثمار سياحي',
-      headline: 'جاردن سيتي ذ.م.م',
+      headline: 'Garden City L.L.C',
       subheadline: 'تعاون استثماري سياحي برؤية واضحة',
       description:
         'نطوّر وجهات سياحية استثنائية ونبني شراكات استراتيجية تعزز قيمة الاستثمار السياحي في قلب طرابلس وليبيا.',
@@ -130,8 +127,8 @@ export const translations: Record<Language, Dictionary> = {
     },
     about: {
       eyebrow: 'من نحن',
-      title: 'جاردن سيتي… حيث يلتقي الاستثمار بالهيبة السياحية',
-      p1: 'جاردن سيتي ذ.م.م (Garden City L.L.C) جهة متخصصة في التعاون الاستثماري السياحي، تعمل على بناء شراكات مستدامة ترفع قيمة الوجهات وتفتح آفاقاً جديدة للنمو.',
+      title: 'Garden City L.L.C… حيث يلتقي الاستثمار بالهيبة السياحية',
+      p1: 'Garden City L.L.C جهة متخصصة في التعاون الاستثماري السياحي، تعمل على بناء شراكات مستدامة ترفع قيمة الوجهات وتفتح آفاقاً جديدة للنمو.',
       p2: 'نؤمن بأن السياحة منظومة متكاملة من الضيافة والثقافة والتجربة، ونقدّم حلولاً استثمارية بمعايير راقية تليق بطموح شركائنا.',
       p3: 'مقرنا في طريق المطار، سيدي صليم، طرابلس - ليبيا، ونخدم شركاءنا عبر قنوات مباشرة ومهنية لضمان سرعة الاستجابة وجودة التنفيذ.',
       visionTitle: 'رؤية استثمارية',
@@ -147,7 +144,7 @@ export const translations: Record<Language, Dictionary> = {
       eyebrow: 'الاستثمارات والتصنيفات',
       title: 'قطاعاتنا الاستثمارية',
       description:
-        'تصنيفات واضحة ومنظمة لقطاعات التعاون الاستثماري السياحي التي تركز عليها جاردن سيتي.',
+        'تصنيفات واضحة ومنظمة لقطاعات التعاون الاستثماري السياحي التي تركز عليها Garden City L.L.C.',
       items: {
         hospitality: {
           title: 'الضيافة والفنادق',
@@ -190,7 +187,6 @@ export const translations: Record<Language, Dictionary> = {
       address: 'العنوان',
       phoneFax: 'هاتف وفاكس',
       officialEmail: 'البريد الرسمي',
-      website: 'الموقع الرسمي',
       mapTitle: 'موقعنا على الخريطة',
       openMaps: 'افتح في خرائط Google',
       call: 'اتصال',
@@ -221,7 +217,7 @@ export const translations: Record<Language, Dictionary> = {
     },
     footer: {
       blurb:
-        'جاردن سيتي ذ.م.م — التعاون الاستثماري السياحي. شراكات راقية ووجهات واعدة في طرابلس.',
+        'Garden City L.L.C — التعاون الاستثماري السياحي. شراكات راقية ووجهات واعدة في طرابلس.',
       quickLinks: 'روابط سريعة',
       contact: 'تواصل',
       rights: 'جميع الحقوق محفوظة.',
@@ -236,7 +232,6 @@ export const translations: Record<Language, Dictionary> = {
   en: {
     brand: {
       company: 'Garden City L.L.C',
-      companyShort: 'Garden City',
       tagline: 'Tourism Investment Cooperation',
     },
     nav: {
@@ -320,7 +315,6 @@ export const translations: Record<Language, Dictionary> = {
       address: 'Address',
       phoneFax: 'Telephone & Fax',
       officialEmail: 'Official Email',
-      website: 'Official Website',
       mapTitle: 'Our Location',
       openMaps: 'Open in Google Maps',
       call: 'Call',

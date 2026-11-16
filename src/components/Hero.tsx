@@ -43,8 +43,10 @@ const Hero: FC = () => {
           {language === 'ar' ? company.taglineAr : company.taglineEn}
         </p>
 
-        <h1 className="animate-fade-up-delay max-w-3xl text-[2rem] font-extrabold leading-[1.2] break-words text-white sm:text-5xl md:text-6xl">
-          <span className="block">{t.hero.headline}</span>
+        <h1 className="animate-fade-up-delay max-w-4xl text-[2rem] font-extrabold leading-[1.2] break-words text-white sm:text-5xl md:text-6xl">
+          <span className="block font-display" dir="ltr">
+            {company.nameEn}
+          </span>
           <span className="mt-2 block text-gradient text-[0.72em] sm:text-[0.65em]">
             {t.hero.subheadline}
           </span>

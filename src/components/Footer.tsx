@@ -17,15 +17,6 @@ const Footer: FC = () => {
             <p className="mt-4 max-w-md text-sm leading-7 text-[var(--text-secondary)]">
               {t.footer.blurb}
             </p>
-            <a
-              href={`https://${company.website}`}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-4 inline-block break-all font-display text-base font-semibold text-cyan transition hover:brightness-110 sm:text-lg"
-              dir="ltr"
-            >
-              {company.website}
-            </a>
           </div>
 
           <div>
@@ -77,12 +68,9 @@ const Footer: FC = () => {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 border-t border-[var(--glass-border)] pt-6 text-xs text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between">
-          <p>
+        <div className="mt-10 border-t border-[var(--glass-border)] pt-6 text-xs text-[var(--text-muted)]">
+          <p dir="ltr">
             © {year} {company.nameEn}. {t.footer.rights}
-          </p>
-          <p className="break-all" dir="ltr">
-            {company.website}
           </p>
         </div>
       </div>

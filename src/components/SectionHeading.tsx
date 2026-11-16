@@ -10,7 +10,7 @@ const SectionHeading: FC<SectionHeadingProps> = ({
   const alignment = align === 'center' ? 'mx-auto text-center' : 'text-start'
 
   return (
-    <div className={`max-w-2xl ${alignment}`}>
+    <div className={`w-full max-w-3xl ${alignment}`}>
       <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">{eyebrow}</p>
       <h2 className="text-3xl font-extrabold leading-tight text-[var(--text-primary)] sm:text-4xl">
         {title}
