@@ -17,10 +17,12 @@ export interface ClubFeature {
   description: string
 }
 
+export type GalleryCategory = 'الكل' | 'وجهات' | 'نادي بيغونيا' | 'استثمار' | 'ضيافة' | 'عمارة'
+
 export interface GalleryItem {
   id: string
   title: string
-  category: string
+  category: Exclude<GalleryCategory, 'الكل'>
   imageUrl: string
   alt: string
 }
@@ -28,19 +30,27 @@ export interface GalleryItem {
 export interface ContactPerson {
   id: string
   name: string
+  nameEn: string
   role: string
   phone: string
   phoneDisplay: string
+  whatsapp: string
 }
 
 export interface CompanyInfo {
   nameAr: string
   nameEn: string
+  tagline: string
   clubName: string
   website: string
-  address: string
+  addressAr: string
+  addressEn: string
   phone: string
   email: string
+  mapsUrl: string
+  mapsEmbedUrl: string
+  lat: number
+  lng: number
 }
 
 export interface ContactFormData {
@@ -57,4 +67,11 @@ export interface ContactFormState {
   values: ContactFormData
   errors: ContactFormErrors
   status: 'idle' | 'submitting' | 'success' | 'error'
+}
+
+export interface SectionHeadingProps {
+  eyebrow: string
+  title: string
+  description?: string
+  align?: 'start' | 'center'
 }

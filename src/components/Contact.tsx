@@ -4,6 +4,8 @@ import { company, contactPersons } from '../data/content'
 import type { ContactFormData, ContactFormState } from '../types'
 import { hasFormErrors, validateContactForm } from '../utils/validation'
 import ContactPersonCard from './ContactPersonCard'
+import LocationMap from './LocationMap'
+import SectionHeading from './SectionHeading'
 
 const initialValues: ContactFormData = {
   name: '',
@@ -59,45 +61,44 @@ const Contact: FC = () => {
         errors: {},
         status: 'success',
       })
-    }, 450)
+    }, 400)
   }
 
   const fieldClass =
-    'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-cyan/50 focus:bg-white/8 focus:ring-2 focus:ring-cyan/20'
+    'w-full min-h-12 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#00A9FF]/50 focus:bg-white/[0.07] focus:ring-2 focus:ring-[#00A9FF]/20'
 
   return (
     <section id="contact" className="section-pad relative overflow-hidden">
-      <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-teal/15 blur-3xl" />
+      <div className="pointer-events-none absolute start-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#0078D7]/12 blur-3xl" />
 
       <div className="container-site relative">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">تواصل معنا</p>
-          <h2 className="text-3xl font-extrabold text-white md:text-4xl">
-            نحن هنا لبناء شراكتك القادمة
-          </h2>
-          <p className="mt-4 text-base leading-7 text-white/65">
-            تواصل مع الإدارة مباشرة أو أرسل رسالتك عبر النموذج، وسنعود إليك في أقرب
-            وقت.
-          </p>
-        </div>
+        <SectionHeading
+          eyebrow="تواصل معنا"
+          title="نحن هنا لبناء شراكتك القادمة"
+          description="تواصل مع الإدارة مباشرة، حدّد موقعنا على الخريطة، أو أرسل رسالتك عبر النموذج."
+        />
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {contactPersons.map((person) => (
             <ContactPersonCard key={person.id} person={person} />
           ))}
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <aside className="glass-strong space-y-5 rounded-2xl p-6 md:p-8">
+        <div className="mt-8">
+          <LocationMap />
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+          <aside className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl sm:p-7">
             <h3 className="text-xl font-bold text-white">معلومات الشركة</h3>
 
             <div className="flex items-start gap-3 text-sm leading-7 text-white/70">
               <MapPin className="mt-1 shrink-0 text-cyan" size={18} />
               <div>
                 <p className="font-semibold text-white">العنوان</p>
-                <p>{company.address}</p>
-                <p className="mt-1 text-white/50" dir="ltr">
-                  Airport St., Sedy Slem, Tripoli - Libya
+                <p>{company.addressAr}</p>
+                <p className="mt-1 text-white/45" dir="ltr">
+                  {company.addressEn}
                 </p>
               </div>
             </div>
@@ -106,7 +107,11 @@ const Contact: FC = () => {
               <Phone className="mt-1 shrink-0 text-cyan" size={18} />
               <div>
                 <p className="font-semibold text-white">هاتف وفاكس</p>
-                <a href="tel:+218214802432" className="transition hover:text-cyan" dir="ltr">
+                <a
+                  href="tel:+218214802432"
+                  className="transition hover:text-cyan"
+                  dir="ltr"
+                >
                   {company.phone}
                 </a>
               </div>
@@ -126,7 +131,7 @@ const Contact: FC = () => {
               </div>
             </div>
 
-            <div className="rounded-xl border border-cyan/20 bg-cyan/5 px-4 py-3">
+            <div className="rounded-xl border border-[#00A9FF]/25 bg-[#00A9FF]/08 px-4 py-3">
               <p className="text-xs text-white/50">الموقع الرسمي</p>
               <a
                 href={`https://${company.website}`}
@@ -143,10 +148,10 @@ const Contact: FC = () => {
           <form
             onSubmit={handleSubmit}
             noValidate
-            className="glass rounded-2xl p-6 md:p-8"
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl sm:p-7"
             aria-label="نموذج التواصل"
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="mb-2 block text-sm font-medium text-white/80">
                   الاسم الكامل
@@ -248,11 +253,11 @@ const Contact: FC = () => {
               ) : null}
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <button
                 type="submit"
                 disabled={form.status === 'submitting'}
-                className="inline-flex items-center gap-2 rounded-xl bg-brand-gradient px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_24px_rgba(0,169,255,0.25)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <Send size={16} />
                 {form.status === 'submitting' ? 'جاري الإرسال...' : 'إرسال الرسالة'}

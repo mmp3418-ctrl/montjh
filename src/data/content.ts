@@ -2,6 +2,7 @@ import type {
   ClubFeature,
   CompanyInfo,
   ContactPerson,
+  GalleryCategory,
   GalleryItem,
   NavItem,
   ServiceItem,
@@ -10,11 +11,18 @@ import type {
 export const company: CompanyInfo = {
   nameAr: 'شركة مدينة الحدائق ذ.م.م',
   nameEn: 'Garden City Company LLC',
+  tagline: 'Tourism Investment Cooperation',
   clubName: 'Begonia Club',
   website: 'www.begonia.com.ly',
-  address: 'شارع المطار، سيدي سليم، طرابلس — ليبيا',
+  addressAr: 'طريق المطار، سيدي صليم، طرابلس - ليبيا',
+  addressEn: 'Airport St., Sedy Slem, Tripoli - Libya',
   phone: '+218 (21) 480 2432',
   email: 'info@begonia.com.ly',
+  mapsUrl: 'https://maps.google.com/?q=32.794930,13.134346',
+  mapsEmbedUrl:
+    'https://maps.google.com/maps?q=32.794930,13.134346&z=16&output=embed',
+  lat: 32.79493,
+  lng: 13.134346,
 }
 
 export const navItems: NavItem[] = [
@@ -94,13 +102,22 @@ export const clubFeatures: ClubFeature[] = [
   },
 ]
 
+export const galleryCategories: GalleryCategory[] = [
+  'الكل',
+  'وجهات',
+  'نادي بيغونيا',
+  'استثمار',
+  'ضيافة',
+  'عمارة',
+]
+
 export const galleryItems: GalleryItem[] = [
   {
     id: 'g1',
     title: 'أفق المتوسط',
     category: 'وجهات',
     imageUrl:
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80',
     alt: 'شاطئ متوسطي عند الغروب',
   },
   {
@@ -108,7 +125,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'ردهة النادي',
     category: 'نادي بيغونيا',
     imageUrl:
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
     alt: 'ردهة فندقية فاخرة',
   },
   {
@@ -116,7 +133,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'حدائق استثمارية',
     category: 'استثمار',
     imageUrl:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1400&q=80',
     alt: 'حديقة خضراء منسقة',
   },
   {
@@ -124,7 +141,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'تجربة ضيافة',
     category: 'ضيافة',
     imageUrl:
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80',
     alt: 'منتجع فاخر بإطلالة مائية',
   },
   {
@@ -132,7 +149,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'ممرات معمارية',
     category: 'عمارة',
     imageUrl:
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=80',
     alt: 'ممر معماري فاخر',
   },
   {
@@ -140,8 +157,24 @@ export const galleryItems: GalleryItem[] = [
     title: 'أمسية النادي',
     category: 'نادي بيغونيا',
     imageUrl:
-      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80',
     alt: 'قاعة مطعم راقية مضاءة',
+  },
+  {
+    id: 'g7',
+    title: 'إطلالة ساحلية',
+    category: 'وجهات',
+    imageUrl:
+      'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1400&q=80',
+    alt: 'ساحل متوسطي صافٍ',
+  },
+  {
+    id: 'g8',
+    title: 'قاعة الاستقبال',
+    category: 'ضيافة',
+    imageUrl:
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=80',
+    alt: 'قاعة استقبال فندقية فاخرة',
   },
 ]
 
@@ -149,15 +182,19 @@ export const contactPersons: ContactPerson[] = [
   {
     id: 'mounir',
     name: 'منير',
+    nameEn: 'Mounir',
     role: 'الإدارة المباشرة',
     phone: '0910151188',
     phoneDisplay: '0910 151 188',
+    whatsapp: '218910151188',
   },
   {
     id: 'khaled',
     name: 'خالد',
+    nameEn: 'Khaled',
     role: 'الإدارة المباشرة',
     phone: '0912153950',
     phoneDisplay: '0912 153 950',
+    whatsapp: '218912153950',
   },
 ]

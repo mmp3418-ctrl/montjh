@@ -1,60 +1,129 @@
-import { useState, type FC } from 'react'
-import { galleryItems } from '../data/content'
+import { Expand, X } from 'lucide-react'
+import { useEffect, useMemo, useState, type FC } from 'react'
+import { galleryCategories, galleryItems } from '../data/content'
+import type { GalleryCategory, GalleryItem } from '../types'
+import SectionHeading from './SectionHeading'
 
 const Gallery: FC = () => {
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [filter, setFilter] = useState<GalleryCategory>('الكل')
+  const [activeItem, setActiveItem] = useState<GalleryItem | null>(null)
+
+  const filteredItems = useMemo(() => {
+    if (filter === 'الكل') return galleryItems
+    return galleryItems.filter((item) => item.category === filter)
+  }, [filter])
+
+  useEffect(() => {
+    if (!activeItem) return
+
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') setActiveItem(null)
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [activeItem])
 
   return (
-    <section id="gallery" className="section-pad bg-navy-soft/30">
-      <div className="container-site">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">المعرض</p>
-          <h2 className="text-3xl font-extrabold text-white md:text-4xl">
-            لحظات من عالم بيغونيا والاستثمار السياحي
-          </h2>
-          <p className="mt-4 text-base leading-7 text-white/65">
-            تصفح مجموعة مختارة من الصور التي تعكس روح الوجهات، أجواء النادي، ورؤية
-            المشاريع الاستثمارية.
-          </p>
-        </div>
+    <section id="gallery" className="section-pad relative overflow-hidden bg-navy-soft/30">
+      <div className="container-site relative">
+        <SectionHeading
+          eyebrow="المعرض"
+          title="لحظات من عالم بيغونيا والاستثمار السياحي"
+          description="تصفية تفاعلية ومعاينة كاملة للصور التي تعكس روح الوجهات، أجواء النادي، ورؤية المشاريع."
+        />
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {galleryItems.map((item, index) => {
-            const isWide = index === 0 || index === 5
+        <div className="mt-8 flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:justify-center sm:overflow-visible">
+          {galleryCategories.map((category) => {
+            const isActive = filter === category
             return (
-              <li
-                key={item.id}
-                className={`group relative overflow-hidden rounded-2xl ${
-                  isWide ? 'sm:col-span-2 lg:col-span-1' : ''
-                } ${index === 0 ? 'lg:row-span-2' : ''}`}
+              <button
+                key={category}
+                type="button"
+                onClick={() => setFilter(category)}
+                className={`min-h-11 shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? 'border-[#00A9FF]/60 bg-[#00A9FF]/15 text-cyan shadow-[0_0_24px_rgba(0,169,255,0.2)]'
+                    : 'border-white/10 bg-white/[0.03] text-white/65 hover:border-[#00A9FF]/40 hover:text-white'
+                }`}
               >
-                <button
-                  type="button"
-                  className="relative block h-full min-h-64 w-full overflow-hidden text-start focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
-                  onClick={() => setActiveId(item.id === activeId ? null : item.id)}
-                  aria-pressed={activeId === item.id}
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt={item.alt}
-                    className={`h-full w-full object-cover transition duration-700 ${
-                      activeId === item.id ? 'scale-110' : 'scale-100 group-hover:scale-105'
-                    } ${index === 0 ? 'min-h-[28rem]' : 'min-h-64'}`}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/20 to-transparent opacity-90 transition group-hover:opacity-100" />
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <span className="text-xs font-semibold tracking-wide text-cyan">
-                      {item.category}
-                    </span>
-                    <h3 className="mt-1 text-lg font-bold text-white">{item.title}</h3>
-                  </div>
-                </button>
-              </li>
+                {category}
+              </button>
             )
           })}
+        </div>
+
+        <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredItems.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => setActiveItem(item)}
+                className="group relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-start shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-2xl transition hover:border-[#00A9FF]/50 focus:outline-none"
+              >
+                <img
+                  src={item.imageUrl}
+                  alt={item.alt}
+                  className="h-56 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-64"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4 sm:p-5">
+                  <div>
+                    <span className="text-[11px] font-semibold tracking-wide text-cyan">
+                      {item.category}
+                    </span>
+                    <h3 className="mt-1 text-base font-bold text-white sm:text-lg">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/[0.08] text-white opacity-90 transition group-hover:border-[#00A9FF]/50 group-hover:text-cyan">
+                    <Expand size={16} />
+                  </span>
+                </div>
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
+
+      {activeItem ? (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-navy-deep/85 p-4 backdrop-blur-xl"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeItem.title}
+          onClick={() => setActiveItem(null)}
+        >
+          <div
+            className="animate-lightbox-in relative w-full max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-navy/90 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="absolute end-3 top-3 z-10 touch-target inline-flex items-center justify-center rounded-xl border border-white/15 bg-navy/70 text-white backdrop-blur-xl transition hover:border-[#00A9FF]/50"
+              aria-label="إغلاق المعاينة"
+              onClick={() => setActiveItem(null)}
+            >
+              <X size={18} />
+            </button>
+            <img
+              src={activeItem.imageUrl}
+              alt={activeItem.alt}
+              className="max-h-[70vh] w-full object-cover"
+            />
+            <div className="border-t border-white/10 px-5 py-4">
+              <p className="text-xs font-semibold text-cyan">{activeItem.category}</p>
+              <h3 className="mt-1 text-lg font-bold text-white">{activeItem.title}</h3>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   )
 }
