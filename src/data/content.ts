@@ -1,16 +1,13 @@
+import type { NavItem } from '../types'
+
 /** Canonical brand — never translate or localize this string. */
 export const BRAND_NAME = 'Garden City L.L.C' as const
 
-/**
- * Future dashboard-driven content will populate these empty contracts.
- * Keep the shell free of hardcoded business data.
- */
-export interface SiteContent {
-  hero?: unknown
-  about?: unknown
-  investments?: unknown
-  contact?: unknown
-  footer?: unknown
-}
-
-export const siteContent: SiteContent = {}
+export const navItems: NavItem[] = [
+  { id: 'home', href: '#home', labelKey: 'home' },
+  { id: 'about', href: '#about', labelKey: 'about' },
+  { id: 'vision', href: '#vision', labelKey: 'vision' },
+  { id: 'services', href: '#services', labelKey: 'services' },
+  { id: 'gallery', href: '#gallery', labelKey: 'gallery' },
+  { id: 'contact', href: '#contact', labelKey: 'contact' },
+]
