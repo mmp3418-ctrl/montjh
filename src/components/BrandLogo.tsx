@@ -1,5 +1,4 @@
 import type { FC } from 'react'
-import { useLanguage } from '../context/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
 import { BRAND_NAME } from '../data/content'
 
@@ -9,7 +8,6 @@ interface BrandLogoProps {
 }
 
 const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
-  const { t } = useLanguage()
   const { theme } = useTheme()
   const markColor = theme === 'dark' ? '#F8FAFC' : '#0B192C'
 
@@ -32,20 +30,15 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
         <ellipse cx="34" cy="24" rx="7" ry="4.5" fill="#0047AB" />
       </svg>
 
-      <div className="min-w-0 leading-[1.15]">
-        <p
-          className={`whitespace-nowrap font-display font-extrabold tracking-tight ${
-            compact ? 'text-[13px] sm:text-sm' : 'text-sm sm:text-[15px]'
-          }`}
-          style={{ color: markColor }}
-          dir="ltr"
-        >
-          {BRAND_NAME}
-        </p>
-        <p className="mt-0.5 truncate text-[10px] font-medium text-cyan sm:text-[11px]">
-          {t.brand.tagline}
-        </p>
-      </div>
+      <p
+        className={`whitespace-nowrap font-display font-extrabold tracking-tight ${
+          compact ? 'text-[13px] sm:text-sm' : 'text-sm sm:text-[15px]'
+        }`}
+        style={{ color: markColor }}
+        dir="ltr"
+      >
+        {BRAND_NAME}
+      </p>
     </div>
   )
 }
