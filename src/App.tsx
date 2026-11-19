@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import AboutVisionMission from './components/AboutVisionMission'
 import Contact from './components/Contact'
+import FacilitiesOverview from './components/FacilitiesOverview'
 import Footer from './components/Footer'
 import Gallery from './components/Gallery'
 import Hero from './components/Hero'
@@ -17,7 +17,7 @@ const AppShell: FC = () => {
       <Navbar />
       <main>
         <Hero />
-        <AboutVisionMission />
+        <FacilitiesOverview />
         <Services />
         <Gallery />
         <Contact />

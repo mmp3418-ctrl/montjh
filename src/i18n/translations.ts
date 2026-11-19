@@ -85,8 +85,8 @@ export const translations: Record<Language, Dictionary> = {
   ar: {
     nav: {
       home: 'الرئيسية',
-      about: 'نبذة عنا',
-      vision: 'رؤيتنا وهدفنا',
+      about: 'المرافق',
+      vision: 'الترفيه والرياضة',
       services: 'الخدمات',
       gallery: 'معرض الصور',
       contact: 'التواصل',
@@ -96,25 +96,25 @@ export const translations: Record<Language, Dictionary> = {
       menuLabel: 'القائمة',
     },
     hero: {
-      ctaPrimary: 'استكشف خدماتنا',
+      ctaPrimary: 'استكشف المرافق',
       ctaSecondary: 'تواصل معنا',
     },
     about: {
-      eyebrow: 'نبذة عنا',
-      title: 'نبذة عنا',
+      eyebrow: 'المجمع السكني',
+      title: 'وصف المرافق والخدمات',
     },
     vision: {
-      eyebrow: 'الهوية الاستراتيجية',
-      visionTitle: 'رؤيتنا',
-      missionTitle: 'هدفنا',
+      eyebrow: 'المرافق',
+      visionTitle: 'المرافق الترفيهية والرياضية',
+      missionTitle: 'الخدمات المتوفرة',
     },
     services: {
-      eyebrow: 'الخدمات والقطاعات',
-      title: 'خدماتنا',
+      eyebrow: 'المرافق الترفيهية',
+      title: 'المرافق الترفيهية والرياضية',
     },
     gallery: {
       eyebrow: 'معرض الصور',
-      title: 'لحظات ومشاهد',
+      title: 'معرض الصور',
       all: 'الكل',
     },
     contact: {
@@ -164,8 +164,8 @@ export const translations: Record<Language, Dictionary> = {
   en: {
     nav: {
       home: 'Home',
-      about: 'About',
-      vision: 'Vision & Mission',
+      about: 'Facilities',
+      vision: 'Recreation & Sports',
       services: 'Services',
       gallery: 'Gallery',
       contact: 'Contact',
@@ -175,25 +175,25 @@ export const translations: Record<Language, Dictionary> = {
       menuLabel: 'Menu',
     },
     hero: {
-      ctaPrimary: 'Explore Services',
+      ctaPrimary: 'Explore Facilities',
       ctaSecondary: 'Contact Us',
     },
     about: {
-      eyebrow: 'About Us',
-      title: 'About Us',
+      eyebrow: 'Residential Complex',
+      title: 'Facilities & Services Overview',
     },
     vision: {
-      eyebrow: 'Strategic Identity',
-      visionTitle: 'Our Vision',
-      missionTitle: 'Our Mission',
+      eyebrow: 'Facilities',
+      visionTitle: 'Recreational and Sports Facilities',
+      missionTitle: 'Available Services',
     },
     services: {
-      eyebrow: 'Services & Sectors',
-      title: 'Our Services',
+      eyebrow: 'Recreational Facilities',
+      title: 'Recreational and Sports Facilities',
     },
     gallery: {
       eyebrow: 'Gallery',
-      title: 'Moments & Views',
+      title: 'Gallery',
       all: 'All',
     },
     contact: {

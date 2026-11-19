@@ -1,26 +1,17 @@
 import {
-  Building2,
-  Compass,
-  Handshake,
-  Hotel,
-  Landmark,
-  Plane,
-  Sparkles,
-  Trees,
+  Bath,
+  Coffee,
+  Flame,
+  Waves,
   type LucideIcon,
 } from 'lucide-react'
 import type { FC } from 'react'
 
 const iconMap: Record<string, LucideIcon> = {
-  hotel: Hotel,
-  plane: Plane,
-  landmark: Landmark,
-  handshake: Handshake,
-  tree: Trees,
-  trees: Trees,
-  compass: Compass,
-  building: Building2,
-  sparkles: Sparkles,
+  waves: Waves,
+  flame: Flame,
+  coffee: Coffee,
+  bath: Bath,
 }
 
 interface ServiceIconProps {
@@ -30,7 +21,7 @@ interface ServiceIconProps {
 
 const ServiceIcon: FC<ServiceIconProps> = ({ name, className = 'h-6 w-6' }) => {
   const key = (name ?? '').trim().toLowerCase()
-  const Icon = iconMap[key] ?? Sparkles
+  const Icon = iconMap[key] ?? Waves
   return <Icon className={className} aria-hidden="true" />
 }
 
