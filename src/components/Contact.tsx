@@ -1,20 +1,13 @@
-import { ExternalLink, Mail, MapPin, MessageCircle, Phone, Send, UserRound } from 'lucide-react'
+import { ExternalLink, Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState, type ChangeEvent, type FC, type FormEvent } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSite } from '../context/SiteDataContext'
+import { MAP_EMBED_URL, MAP_EXTERNAL_URL } from '../data/seedContent'
 import { supabase } from '../lib/supabase'
 import type { ContactFormData, ContactFormErrors } from '../types'
-import {
-  hasText,
-  pickLocale,
-  toEmbedMapUrl,
-  toTelHref,
-  toWhatsAppHref,
-} from '../utils/locale'
+import { pickLocale, toTelHref } from '../utils/locale'
 import { hasFormErrors, validateContactForm } from '../utils/validation'
-import EmptyState from './EmptyState'
 import SectionHeading from './SectionHeading'
-import SkeletonBlock from './SkeletonBlock'
 
 const initialValues: ContactFormData = {
   full_name: '',
@@ -25,16 +18,14 @@ const initialValues: ContactFormData = {
 
 const Contact: FC = () => {
   const { t, language } = useLanguage()
-  const { settings, management, loading } = useSite()
+  const { settings } = useSite()
   const [values, setValues] = useState<ContactFormData>(initialValues)
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
-  const address = pickLocale(language, settings?.address_ar, settings?.address_en)
-  const phone = settings?.phone?.trim() || ''
-  const email = settings?.email?.trim() || ''
-  const mapUrl = settings?.map_url?.trim() || ''
-  const embedUrl = mapUrl ? toEmbedMapUrl(mapUrl) : null
+  const address = pickLocale(language, settings.address_ar, settings.address_en)
+  const phone = settings.phone?.trim() || ''
+  const email = settings.email?.trim() || ''
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -86,171 +77,73 @@ const Contact: FC = () => {
       <div className="container-site relative">
         <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {loading ? (
-            <>
-              <SkeletonBlock className="h-36" />
-              <SkeletonBlock className="h-36" />
-              <SkeletonBlock className="h-36" />
-            </>
-          ) : (
-            <>
-              <div className="glass-card rounded-2xl p-5 sm:p-6">
-                <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
-                  <MapPin size={18} />
-                </div>
-                <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.address}</p>
-                {hasText(address) ? (
-                  <p className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)]">
-                    {address}
-                  </p>
-                ) : (
-                  <p className="mt-2 text-sm text-[var(--text-muted)]">{t.empty.awaiting}</p>
-                )}
-              </div>
-
-              <div className="glass-card rounded-2xl p-5 sm:p-6">
-                <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
-                  <Phone size={18} />
-                </div>
-                <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.phone}</p>
-                {hasText(phone) ? (
-                  <a
-                    href={toTelHref(phone)}
-                    className="mt-2 inline-block text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
-                    dir="ltr"
-                  >
-                    {phone}
-                  </a>
-                ) : (
-                  <p className="mt-2 text-sm text-[var(--text-muted)]">{t.empty.awaiting}</p>
-                )}
-              </div>
-
-              <div className="glass-card rounded-2xl p-5 sm:p-6 md:col-span-2 xl:col-span-1">
-                <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
-                  <Mail size={18} />
-                </div>
-                <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.email}</p>
-                {hasText(email) ? (
-                  <a
-                    href={`mailto:${email}`}
-                    className="mt-2 inline-block break-all text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
-                    dir="ltr"
-                  >
-                    {email}
-                  </a>
-                ) : (
-                  <p className="mt-2 text-sm text-[var(--text-muted)]">{t.empty.awaiting}</p>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="mt-8">
-          <h3 className="mb-4 text-lg font-bold text-[var(--text-primary)]">
-            {t.contact.management}
-          </h3>
-          {loading ? (
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <SkeletonBlock className="h-40" />
-              <SkeletonBlock className="h-40" />
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="glass-card rounded-2xl p-5 sm:p-6">
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+              <MapPin size={18} />
             </div>
-          ) : management.length === 0 ? (
-            <EmptyState message={t.empty.noContacts} icon={<UserRound size={22} />} compact />
-          ) : (
-            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {management.map((person) => {
-                const name = pickLocale(language, person.name_ar, person.name_en)
-                const role = pickLocale(language, person.role_ar, person.role_en)
-                const personPhone = person.phone?.trim() || ''
+            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.address}</p>
+            <p className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)]">
+              {address}
+            </p>
+          </div>
 
-                return (
-                  <li key={person.id} className="glass-card rounded-2xl p-5 sm:p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gradient text-white">
-                        <UserRound size={22} />
-                      </div>
-                      <div className="min-w-0">
-                        <h4 className="text-lg font-bold text-[var(--text-primary)]">{name}</h4>
-                        {hasText(role) ? (
-                          <p className="mt-1 text-sm text-[var(--text-muted)]">{role}</p>
-                        ) : null}
-                        {hasText(personPhone) ? (
-                          <a
-                            href={toTelHref(personPhone)}
-                            className="mt-2 inline-block font-display text-base font-semibold text-cyan"
-                            dir="ltr"
-                          >
-                            {personPhone}
-                          </a>
-                        ) : null}
-                      </div>
-                    </div>
-                    {hasText(personPhone) ? (
-                      <div className="mt-5 grid grid-cols-2 gap-2.5">
-                        <a
-                          href={toTelHref(personPhone)}
-                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[var(--glass-border)] text-sm font-bold text-[var(--text-primary)] transition hover:text-cyan"
-                        >
-                          <Phone size={15} />
-                          {t.contact.call}
-                        </a>
-                        <a
-                          href={toWhatsAppHref(personPhone)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient text-sm font-bold text-white"
-                        >
-                          <MessageCircle size={15} />
-                          WhatsApp
-                        </a>
-                      </div>
-                    ) : null}
-                  </li>
-                )
-              })}
-            </ul>
-          )}
+          <div className="glass-card rounded-2xl p-5 sm:p-6">
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+              <Phone size={18} />
+            </div>
+            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.phone}</p>
+            <a
+              href={toTelHref(phone)}
+              className="mt-2 inline-block text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
+              dir="ltr"
+            >
+              {phone}
+            </a>
+          </div>
+
+          <div className="glass-card rounded-2xl p-5 sm:p-6">
+            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+              <Mail size={18} />
+            </div>
+            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.email}</p>
+            <a
+              href={`mailto:${email}`}
+              className="mt-2 inline-block break-all text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
+              dir="ltr"
+            >
+              {email}
+            </a>
+          </div>
         </div>
 
         <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-[var(--shadow-glass)] backdrop-blur-2xl">
           <div className="flex flex-col gap-3 border-b border-[var(--glass-border)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div>
               <h3 className="text-base font-bold text-[var(--text-primary)]">{t.contact.mapTitle}</h3>
-              {hasText(address) ? (
-                <p className="mt-0.5 text-xs text-[var(--text-muted)] sm:text-sm">{address}</p>
-              ) : null}
+              <p className="mt-0.5 text-xs text-[var(--text-muted)] sm:text-sm">{address}</p>
             </div>
-            {mapUrl ? (
-              <a
-                href={mapUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white"
-              >
-                {t.contact.openMaps}
-                <ExternalLink size={14} />
-              </a>
-            ) : null}
+            <a
+              href={MAP_EXTERNAL_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white"
+            >
+              {t.contact.openMaps}
+              <ExternalLink size={14} />
+            </a>
           </div>
-          {embedUrl ? (
-            <div className="relative aspect-[16/11] w-full bg-[var(--bg-deep)] sm:aspect-[16/9]">
-              <iframe
-                title={t.contact.mapTitle}
-                src={embedUrl}
-                className="absolute inset-0 h-full w-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-            </div>
-          ) : (
-            <div className="p-6">
-              <EmptyState message={t.empty.noMap} icon={<MapPin size={22} />} compact />
-            </div>
-          )}
+          <div className="relative aspect-[16/11] w-full bg-[var(--bg-deep)] sm:aspect-[16/9]">
+            <iframe
+              title={t.contact.mapTitle}
+              src={MAP_EMBED_URL}
+              className="absolute inset-0 h-full w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-[var(--glass-border)]" />
+          </div>
         </div>
 
         <form

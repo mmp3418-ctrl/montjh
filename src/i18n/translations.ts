@@ -96,12 +96,12 @@ export const translations: Record<Language, Dictionary> = {
       menuLabel: 'القائمة',
     },
     hero: {
-      ctaPrimary: 'استكشف الخدمات',
+      ctaPrimary: 'استكشف خدماتنا',
       ctaSecondary: 'تواصل معنا',
     },
     about: {
       eyebrow: 'نبذة عنا',
-      title: 'من نحن',
+      title: 'نبذة عنا',
     },
     vision: {
       eyebrow: 'الهوية الاستراتيجية',
@@ -149,7 +149,7 @@ export const translations: Record<Language, Dictionary> = {
     empty: {
       awaiting: 'بانتظار المحتوى من لوحة التحكم',
       noServices: 'لا توجد خدمات بعد',
-      noGallery: 'معرض الصور جاهز للإضافة',
+      noGallery: 'بانتظار رفع الصورة',
       noContacts: 'لا توجد جهات اتصال بعد',
       noMap: 'الخريطة ستظهر عند إضافة الرابط',
     },
@@ -180,7 +180,7 @@ export const translations: Record<Language, Dictionary> = {
     },
     about: {
       eyebrow: 'About Us',
-      title: 'Who we are',
+      title: 'About Us',
     },
     vision: {
       eyebrow: 'Strategic Identity',
@@ -228,7 +228,7 @@ export const translations: Record<Language, Dictionary> = {
     empty: {
       awaiting: 'Awaiting content from Dashboard',
       noServices: 'No services yet',
-      noGallery: 'Gallery ready for uploads',
+      noGallery: 'Awaiting photo upload',
       noContacts: 'No management contacts yet',
       noMap: 'Map appears once a link is added',
     },
