@@ -23,9 +23,10 @@ const STORAGE_KEY = 'garden-city-language'
 const LanguageContext = createContext<LanguageContextValue | null>(null)
 
 function getInitialLanguage(): Language {
+  // Default locale is Arabic (RTL). Persisted choice still wins after first toggle.
   if (typeof window === 'undefined') return 'ar'
   const stored = window.localStorage.getItem(STORAGE_KEY)
-  if (stored === 'ar' || stored === 'en') return stored
+  if (stored === 'en') return 'en'
   return 'ar'
 }
 

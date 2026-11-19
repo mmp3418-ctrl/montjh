@@ -8,7 +8,7 @@ export const seedSettings: SiteSettings = {
   hero_subtitle_ar:
     'Garden City L.L.C تقود تطوير الوجهات والمنتجعات الفاخرة عبر شراكات استثمارية رصينة تجمع بين الرؤية المحلية والخبرة الدولية.',
   hero_subtitle_en:
-    'Garden City leads luxury destination and resort development through disciplined investment partnerships that unite local vision with international expertise.',
+    'Garden City L.L.C leads luxury destination and resort development through disciplined investment partnerships that unite local vision with international expertise.',
   about_ar:
     'Garden City L.L.C شركة متخصصة في التعاون الاستثماري السياحي، تعمل على بناء منظومة متكاملة لتطوير المنتجعات والوجهات والضيافة الفاخرة في ليبيا. نجمع بين الحوكمة الاستثمارية الرصينة ومعايير الجودة العالمية لخلق قيمة مستدامة للمستثمرين والشركاء والزوار.',
   about_en:
@@ -22,7 +22,7 @@ export const seedSettings: SiteSettings = {
   mission_en:
     'To develop and manage high-impact tourism projects through rigorous studies, strategic partnerships, and luxury-grade operations that elevate Tripoli and Libya on the regional tourism map.',
   phone: '+218 21 480 2432',
-  email: 'info@garden-city.ly',
+  email: 'info@garden-city.com.ly',
   address_ar: 'طريق المطار، سيدي صليم، طرابلس - ليبيا',
   address_en: 'Airport St., Sedy Slem, Tripoli - Libya',
   map_url: 'https://maps.google.com/?q=32.794930,13.134346',
