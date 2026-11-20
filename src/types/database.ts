@@ -30,6 +30,9 @@ export interface SiteSettings {
   updated_at: string
 }
 
+/** `recreation` = Recreational & Sports Facilities; `service` = Dedicated Services */
+export type ServiceCategory = 'recreation' | 'service'
+
 export interface ServiceRow {
   id: string
   title_ar: string
@@ -38,6 +41,8 @@ export interface ServiceRow {
   description_en: string | null
   icon_name: string | null
   image_url: string | null
+  /** Filters public sections: recreation vs dedicated services */
+  category: ServiceCategory | string | null
   sort_order: number
   created_at: string
 }
@@ -91,6 +96,7 @@ export type ServiceInsert = {
   description_en?: string | null
   icon_name?: string | null
   image_url?: string | null
+  category?: ServiceCategory | string | null
   sort_order?: number
 }
 

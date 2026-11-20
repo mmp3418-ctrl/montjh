@@ -35,6 +35,8 @@ export interface Dictionary {
     eyebrow: string
     title: string
     all: string
+    prev: string
+    next: string
   }
   contact: {
     eyebrow: string
@@ -109,13 +111,15 @@ export const translations: Record<Language, Dictionary> = {
       missionTitle: 'الخدمات المتوفرة',
     },
     services: {
-      eyebrow: 'المرافق الترفيهية',
-      title: 'المرافق الترفيهية والرياضية',
+      eyebrow: 'الخدمات',
+      title: 'الخدمات المتوفرة',
     },
     gallery: {
       eyebrow: 'معرض الصور',
       title: 'معرض الصور',
       all: 'الكل',
+      prev: 'الصورة السابقة',
+      next: 'الصورة التالية',
     },
     contact: {
       eyebrow: 'التواصل',
@@ -188,13 +192,15 @@ export const translations: Record<Language, Dictionary> = {
       missionTitle: 'Available Services',
     },
     services: {
-      eyebrow: 'Recreational Facilities',
-      title: 'Recreational and Sports Facilities',
+      eyebrow: 'Services',
+      title: 'Available Services',
     },
     gallery: {
       eyebrow: 'Gallery',
       title: 'Gallery',
       all: 'All',
+      prev: 'Previous photo',
+      next: 'Next photo',
     },
     contact: {
       eyebrow: 'Contact',

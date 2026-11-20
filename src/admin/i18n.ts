@@ -41,6 +41,9 @@ export interface AdminDictionary {
   logoPreview: string
   logoImage: string
   bilingualHint: string
+  categoryLabel: string
+  categoryRecreation: string
+  categoryService: string
 }
 
 const ar: AdminDictionary = {
@@ -84,6 +87,9 @@ const ar: AdminDictionary = {
   logoPreview: 'معاينة الشعار',
   logoImage: 'شعار الموقع (Navbar / Footer / Favicon)',
   bilingualHint: 'عربي / English',
+  categoryLabel: 'التصنيف',
+  categoryRecreation: 'مرافق ترفيهية ورياضية',
+  categoryService: 'خدمات',
 }
 
 const en: AdminDictionary = {
@@ -127,6 +133,9 @@ const en: AdminDictionary = {
   logoPreview: 'Logo preview',
   logoImage: 'Site Logo (Navbar / Footer / Favicon)',
   bilingualHint: 'Arabic / English',
+  categoryLabel: 'Category',
+  categoryRecreation: 'Recreation & Sports',
+  categoryService: 'Dedicated Service',
 }
 
 export function getAdminDict(language: Language): AdminDictionary {

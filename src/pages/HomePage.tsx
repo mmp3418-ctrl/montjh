@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 import Contact from '../components/Contact'
+import DedicatedServices from '../components/DedicatedServices'
 import DocumentFavicon from '../components/DocumentFavicon'
 import FacilitiesOverview from '../components/FacilitiesOverview'
 import Footer from '../components/Footer'
@@ -20,6 +21,7 @@ const HomePage: FC = () => {
           <Hero />
           <FacilitiesOverview />
           <Services />
+          <DedicatedServices />
           <Gallery />
           <Contact />
         </main>

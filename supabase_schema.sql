@@ -58,12 +58,22 @@ CREATE TABLE IF NOT EXISTS public.services (
   description_en text,
   icon_name text,
   image_url text,
+  category text NOT NULL DEFAULT 'recreation',
   sort_order integer NOT NULL DEFAULT 0,
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
+ALTER TABLE public.services ADD COLUMN IF NOT EXISTS category text;
+UPDATE public.services
+SET category = 'recreation'
+WHERE category IS NULL OR btrim(category) = '';
+ALTER TABLE public.services ALTER COLUMN category SET DEFAULT 'recreation';
+
 CREATE INDEX IF NOT EXISTS services_sort_order_idx
   ON public.services (sort_order ASC);
+
+CREATE INDEX IF NOT EXISTS services_category_idx
+  ON public.services (category ASC);
 
 -- ---------------------------------------------------------------------------
 -- 3) Gallery items (image-only cards on the public site)
@@ -198,7 +208,7 @@ ON CONFLICT (id) DO UPDATE SET
   updated_at = now();
 
 -- Default facilities (only if services table is empty)
-INSERT INTO public.services (title_ar, title_en, description_ar, description_en, icon_name, sort_order)
+INSERT INTO public.services (title_ar, title_en, description_ar, description_en, icon_name, category, sort_order)
 SELECT * FROM (VALUES
   (
     'حوضا سباحة',
@@ -206,6 +216,7 @@ SELECT * FROM (VALUES
     'حوض سباحة صغير مناسب للأطفال، وحوض سباحة آخر بحجم يقارب الحجم الأولمبي.',
     'A small swimming pool suitable for children, and another swimming pool close to Olympic size.',
     'Waves',
+    'recreation',
     1
   ),
   (
@@ -214,6 +225,7 @@ SELECT * FROM (VALUES
     'تحيط بمنطقة أحواض السباحة شرفة واسعة للجلسات، مع منطقة شواء مظللة محاطة بأشجار النخيل.',
     'Surrounding the swimming pool area is a spacious seating terrace, along with a shaded barbecue area surrounded by palm trees.',
     'Flame',
+    'recreation',
     2
   ),
   (
@@ -222,6 +234,7 @@ SELECT * FROM (VALUES
     'تقع على ارتفاع أربع درجات فوق مستوى منطقة المسبح، وتتميز بوجود شرفة واسعة.',
     'Located four steps above the pool area level, featuring a spacious terrace.',
     'Coffee',
+    'recreation',
     3
   ),
   (
@@ -230,9 +243,10 @@ SELECT * FROM (VALUES
     'يوجد حمامان لخدمة المنطقة الترفيهية.',
     'Two restrooms are available to serve the recreational area.',
     'Bath',
+    'recreation',
     4
   )
-) AS v(title_ar, title_en, description_ar, description_en, icon_name, sort_order)
+) AS v(title_ar, title_en, description_ar, description_en, icon_name, category, sort_order)
 WHERE NOT EXISTS (SELECT 1 FROM public.services LIMIT 1);
 
 -- Enable Realtime for public live sync (safe to re-run)

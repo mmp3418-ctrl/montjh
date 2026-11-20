@@ -188,6 +188,20 @@
     min-width: 44px;
   }
 
+  .gallery-frame {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .gallery-nav {
+    min-height: 44px;
+    min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .facility-card {
+    min-height: 100%;
+  }
+
   .nav-shell {
     background: var(--nav-bg);
     border-bottom: 1px solid var(--nav-border);

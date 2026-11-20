@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { seedGallery, seedServices } from '../data/seedContent'
 import { supabase } from '../lib/supabase'
 import type { GalleryItem, ServiceRow, SiteSettings } from '../types'
+import { withNormalizedCategory } from '../utils/services'
 import { mergeSettings } from '../utils/siteSettings'
 
 export interface SiteData {
@@ -59,8 +60,8 @@ async function fetchSiteData(): Promise<SiteData> {
 
   const services =
     !servicesRes.error && Array.isArray(servicesRes.data) && servicesRes.data.length > 0
-      ? (servicesRes.data as ServiceRow[])
-      : seedServices
+      ? (servicesRes.data as ServiceRow[]).map(withNormalizedCategory)
+      : seedServices.map(withNormalizedCategory)
 
   const gallery =
     !galleryRes.error && Array.isArray(galleryRes.data) && galleryRes.data.length > 0

@@ -29,6 +29,7 @@ export type {
   ContactMessageInsert,
   GalleryItem,
   ManagementContact,
+  ServiceCategory,
   ServiceRow,
   SiteSettings,
 } from './database'

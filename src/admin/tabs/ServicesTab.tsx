@@ -2,7 +2,8 @@ import { ArrowDown, ArrowUp, Pencil, Plus, Trash2 } from 'lucide-react'
 import { useEffect, useState, type FC, type FormEvent } from 'react'
 import ServiceIcon, { SERVICE_ICON_OPTIONS } from '../../components/ServiceIcon'
 import { supabase } from '../../lib/supabase'
-import type { ServiceRow } from '../../types'
+import type { ServiceCategory, ServiceRow } from '../../types'
+import { normalizeServiceCategory } from '../../utils/services'
 import type { AdminDictionary } from '../i18n'
 import { AdminInput, AdminSelect, AdminTextarea } from '../components/AdminField'
 import type { ToastState } from '../components/AdminToast'
@@ -19,6 +20,7 @@ type ServiceForm = {
   description_ar: string
   description_en: string
   icon_name: string
+  category: ServiceCategory
   sort_order: number
 }
 
@@ -28,6 +30,7 @@ const emptyForm = (sortOrder: number): ServiceForm => ({
   description_ar: '',
   description_en: '',
   icon_name: 'Waves',
+  category: 'recreation',
   sort_order: sortOrder,
 })
 
@@ -48,7 +51,12 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
       onToast({ type: 'error', message: error.message || dict.error })
       setItems([])
     } else {
-      setItems((data as ServiceRow[]) ?? [])
+      setItems(
+        ((data as ServiceRow[]) ?? []).map((row) => ({
+          ...row,
+          category: normalizeServiceCategory(row.category),
+        })),
+      )
     }
     setLoading(false)
   }
@@ -72,6 +80,7 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
       description_ar: item.description_ar ?? '',
       description_en: item.description_en ?? '',
       icon_name: item.icon_name || 'Waves',
+      category: normalizeServiceCategory(item.category),
       sort_order: item.sort_order ?? 0,
     })
   }
@@ -92,6 +101,7 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
         description_ar: editing.description_ar.trim() || null,
         description_en: editing.description_en.trim() || null,
         icon_name: editing.icon_name,
+        category: editing.category,
         sort_order: Number(editing.sort_order) || 0,
       }
 
@@ -171,7 +181,7 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
 
       {editing ? (
         <form onSubmit={(e) => void handleSave(e)} className="glass rounded-2xl p-5 sm:p-6">
-          <div className="mb-4 flex items-center justify-between gap-3">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <h3 className="text-base font-bold text-[var(--text-primary)]">
               {editing.id ? dict.edit : dict.add}
             </h3>
@@ -212,6 +222,20 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
               dir="ltr"
             />
             <AdminSelect
+              label={dict.categoryLabel}
+              value={editing.category}
+              onChange={(e) =>
+                setEditing({
+                  ...editing,
+                  category: normalizeServiceCategory(e.target.value),
+                })
+              }
+              options={[
+                { value: 'recreation', label: dict.categoryRecreation },
+                { value: 'service', label: dict.categoryService },
+              ]}
+            />
+            <AdminSelect
               label="Icon"
               value={editing.icon_name}
               onChange={(e) => setEditing({ ...editing, icon_name: e.target.value })}
@@ -239,58 +263,64 @@ const ServicesTab: FC<ServicesTabProps> = ({ dict, onToast }) => {
       ) : null}
 
       <ul className="space-y-3">
-        {items.map((item, index) => (
-          <li
-            key={item.id}
-            className="glass flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
-          >
-            <div className="flex min-w-0 items-start gap-3">
-              <div className="inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
-                <ServiceIcon name={item.icon_name} className="h-5 w-5" />
+        {items.map((item, index) => {
+          const category = normalizeServiceCategory(item.category)
+          return (
+            <li
+              key={item.id}
+              className="glass flex flex-col gap-4 rounded-2xl p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5"
+            >
+              <div className="flex min-w-0 items-start gap-3">
+                <div className="inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+                  <ServiceIcon name={item.icon_name} className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="truncate font-bold text-[var(--text-primary)]">{item.title_ar}</p>
+                  <p className="truncate text-sm text-[var(--text-muted)]" dir="ltr">
+                    {item.title_en}
+                  </p>
+                  <p className="mt-1 text-xs text-cyan">
+                    #{item.sort_order} ·{' '}
+                    {category === 'service' ? dict.categoryService : dict.categoryRecreation}
+                  </p>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="truncate font-bold text-[var(--text-primary)]">{item.title_ar}</p>
-                <p className="truncate text-sm text-[var(--text-muted)]" dir="ltr">
-                  {item.title_en}
-                </p>
-                <p className="mt-1 text-xs text-cyan">#{item.sort_order}</p>
-              </div>
-            </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => void swapOrder(index, -1)}
-                disabled={index === 0}
-                className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-[var(--glass-border)] px-3 text-xs font-semibold disabled:opacity-40"
-              >
-                <ArrowUp size={14} /> {dict.reorderUp}
-              </button>
-              <button
-                type="button"
-                onClick={() => void swapOrder(index, 1)}
-                disabled={index === items.length - 1}
-                className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-[var(--glass-border)] px-3 text-xs font-semibold disabled:opacity-40"
-              >
-                <ArrowDown size={14} /> {dict.reorderDown}
-              </button>
-              <button
-                type="button"
-                onClick={() => openEdit(item)}
-                className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-cyan/30 bg-cyan/10 px-3 text-xs font-semibold text-cyan"
-              >
-                <Pencil size={14} /> {dict.edit}
-              </button>
-              <button
-                type="button"
-                onClick={() => void handleDelete(item.id)}
-                className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-red-400/30 bg-red-500/10 px-3 text-xs font-semibold text-red-400"
-              >
-                <Trash2 size={14} /> {dict.delete}
-              </button>
-            </div>
-          </li>
-        ))}
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => void swapOrder(index, -1)}
+                  disabled={index === 0}
+                  className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-[var(--glass-border)] px-3 text-xs font-semibold disabled:opacity-40"
+                >
+                  <ArrowUp size={14} /> {dict.reorderUp}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void swapOrder(index, 1)}
+                  disabled={index === items.length - 1}
+                  className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-[var(--glass-border)] px-3 text-xs font-semibold disabled:opacity-40"
+                >
+                  <ArrowDown size={14} /> {dict.reorderDown}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openEdit(item)}
+                  className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-cyan/30 bg-cyan/10 px-3 text-xs font-semibold text-cyan"
+                >
+                  <Pencil size={14} /> {dict.edit}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleDelete(item.id)}
+                  className="inline-flex min-h-10 items-center gap-1 rounded-xl border border-red-400/30 bg-red-500/10 px-3 text-xs font-semibold text-red-400"
+                >
+                  <Trash2 size={14} /> {dict.delete}
+                </button>
+              </div>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
