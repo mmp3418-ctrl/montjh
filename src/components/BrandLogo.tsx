@@ -31,10 +31,10 @@ const LogoMarkFallback: FC<{ size: number }> = ({ size }) => (
 const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
   const { theme } = useTheme()
   const { settings } = useSite()
-  const logoSrc = resolveLogoUrl(settings.logo_url)
+  const logoSrc = resolveLogoUrl(settings.logo_url, settings.updated_at)
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const markColor = theme === 'dark' ? '#F8FAFC' : '#0B192C'
-  const showImage = failedSrc !== logoSrc
+  const showImage = Boolean(logoSrc) && failedSrc !== logoSrc
 
   useEffect(() => {
     setFailedSrc(null)
@@ -42,12 +42,12 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
 
   const handleLogoError = (event: SyntheticEvent<HTMLImageElement>): void => {
     event.currentTarget.style.display = 'none'
-    setFailedSrc(logoSrc)
+    if (logoSrc) setFailedSrc(logoSrc)
   }
 
   return (
     <div className={`flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
-      {showImage ? (
+      {showImage && logoSrc ? (
         <img
           key={logoSrc}
           src={logoSrc}

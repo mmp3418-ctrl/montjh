@@ -1,5 +1,19 @@
 import type { Language } from '../types'
 
+export function hasText(value: string | null | undefined): boolean {
+  return Boolean(value && value.trim().length > 0)
+}
+
+/** First non-empty string wins (DB fields before seed fallbacks). */
+export function firstText(
+  ...values: Array<string | null | undefined>
+): string {
+  for (const value of values) {
+    if (hasText(value)) return value!.trim()
+  }
+  return ''
+}
+
 export function pickLocale(
   language: Language,
   ar: string | null | undefined,
@@ -7,11 +21,7 @@ export function pickLocale(
 ): string {
   const value = language === 'ar' ? ar : en
   const fallback = language === 'ar' ? en : ar
-  return (value?.trim() || fallback?.trim() || '')
-}
-
-export function hasText(value: string | null | undefined): boolean {
-  return Boolean(value && value.trim().length > 0)
+  return firstText(value, fallback)
 }
 
 export function toTelHref(phone: string): string {

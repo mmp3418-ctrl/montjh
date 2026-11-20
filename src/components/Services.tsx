@@ -10,13 +10,13 @@ const Services: FC = () => {
 
   const sectionTitle = pickLocale(
     language,
-    settings.facilities_heading_ar ?? settings.vision_ar,
-    settings.facilities_heading_en ?? settings.vision_en,
+    settings.facilities_heading_ar,
+    settings.facilities_heading_en,
   )
   const sectionIntro = pickLocale(
     language,
-    settings.facilities_intro_ar ?? settings.mission_ar,
-    settings.facilities_intro_en ?? settings.mission_en,
+    settings.facilities_intro_ar,
+    settings.facilities_intro_en,
   )
 
   return (
@@ -28,9 +28,6 @@ const Services: FC = () => {
 
       <div className="container-site relative">
         <div id="vision" className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">
-            {language === 'ar' ? 'المرافق الترفيهية والرياضية' : 'Recreation & Sports'}
-          </p>
           <h2 className="text-balance text-2xl font-extrabold leading-tight text-[var(--text-primary)] sm:text-3xl md:text-4xl">
             {sectionTitle}
           </h2>

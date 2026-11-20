@@ -9,16 +9,9 @@ const Hero: FC = () => {
   const { t, language } = useLanguage()
   const { settings } = useSite()
 
-  const title = pickLocale(
-    language,
-    settings.main_heading_ar ?? settings.hero_title_ar,
-    settings.main_heading_en ?? settings.hero_title_en,
-  )
-  const subtitle = pickLocale(
-    language,
-    settings.complex_overview_ar ?? settings.hero_subtitle_ar,
-    settings.complex_overview_en ?? settings.hero_subtitle_en,
-  )
+  // Live DB fields (merged: hero_* preferred when set, else main_heading / overview)
+  const title = pickLocale(language, settings.hero_title_ar, settings.hero_title_en)
+  const subtitle = pickLocale(language, settings.hero_subtitle_ar, settings.hero_subtitle_en)
 
   return (
     <section

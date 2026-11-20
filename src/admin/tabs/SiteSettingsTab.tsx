@@ -214,25 +214,42 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
     event.preventDefault()
     setSaving(true)
     try {
+      const heroTitleAr = form.hero_title_ar.trim() || form.main_heading_ar.trim() || null
+      const heroTitleEn = form.hero_title_en.trim() || form.main_heading_en.trim() || null
+      const heroSubtitleAr =
+        form.hero_subtitle_ar.trim() || form.complex_overview_ar.trim() || null
+      const heroSubtitleEn =
+        form.hero_subtitle_en.trim() || form.complex_overview_en.trim() || null
+      const mainHeadingAr = form.main_heading_ar.trim() || form.hero_title_ar.trim() || null
+      const mainHeadingEn = form.main_heading_en.trim() || form.hero_title_en.trim() || null
+      const overviewAr =
+        form.complex_overview_ar.trim() || form.hero_subtitle_ar.trim() || null
+      const overviewEn =
+        form.complex_overview_en.trim() || form.hero_subtitle_en.trim() || null
+      const facilitiesHeadingAr = form.facilities_heading_ar.trim() || null
+      const facilitiesHeadingEn = form.facilities_heading_en.trim() || null
+      const facilitiesIntroAr = form.facilities_intro_ar.trim() || null
+      const facilitiesIntroEn = form.facilities_intro_en.trim() || null
+
       const payload = {
-        hero_title_ar: form.hero_title_ar.trim() || null,
-        hero_title_en: form.hero_title_en.trim() || null,
-        hero_subtitle_ar: form.hero_subtitle_ar.trim() || null,
-        hero_subtitle_en: form.hero_subtitle_en.trim() || null,
-        main_heading_ar: form.main_heading_ar.trim() || null,
-        main_heading_en: form.main_heading_en.trim() || null,
-        complex_overview_ar: form.complex_overview_ar.trim() || null,
-        complex_overview_en: form.complex_overview_en.trim() || null,
-        facilities_heading_ar: form.facilities_heading_ar.trim() || null,
-        facilities_heading_en: form.facilities_heading_en.trim() || null,
-        facilities_intro_ar: form.facilities_intro_ar.trim() || null,
-        facilities_intro_en: form.facilities_intro_en.trim() || null,
-        about_ar: form.complex_overview_ar.trim() || null,
-        about_en: form.complex_overview_en.trim() || null,
-        vision_ar: form.facilities_heading_ar.trim() || null,
-        vision_en: form.facilities_heading_en.trim() || null,
-        mission_ar: form.facilities_intro_ar.trim() || null,
-        mission_en: form.facilities_intro_en.trim() || null,
+        hero_title_ar: heroTitleAr,
+        hero_title_en: heroTitleEn,
+        hero_subtitle_ar: heroSubtitleAr,
+        hero_subtitle_en: heroSubtitleEn,
+        main_heading_ar: mainHeadingAr,
+        main_heading_en: mainHeadingEn,
+        complex_overview_ar: overviewAr,
+        complex_overview_en: overviewEn,
+        facilities_heading_ar: facilitiesHeadingAr,
+        facilities_heading_en: facilitiesHeadingEn,
+        facilities_intro_ar: facilitiesIntroAr,
+        facilities_intro_en: facilitiesIntroEn,
+        about_ar: overviewAr,
+        about_en: overviewEn,
+        vision_ar: facilitiesHeadingAr,
+        vision_en: facilitiesHeadingEn,
+        mission_ar: facilitiesIntroAr,
+        mission_en: facilitiesIntroEn,
         hero_image_url: form.hero_image_url.trim() || null,
         logo_url: form.logo_url.trim() || null,
         updated_at: new Date().toISOString(),

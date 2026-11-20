@@ -4,10 +4,10 @@ import { resolveLogoUrl } from '../utils/siteSettings'
 
 const DocumentFavicon: FC = () => {
   const { settings } = useSite()
-  const logoUrl = resolveLogoUrl(settings.logo_url)
+  const logoUrl = resolveLogoUrl(settings.logo_url, settings.updated_at)
 
   useEffect(() => {
-    const href = logoUrl
+    const href = logoUrl || '/logo.png'
     let link = document.querySelector<HTMLLinkElement>("link[rel='icon']")
 
     if (!link) {
@@ -17,11 +17,11 @@ const DocumentFavicon: FC = () => {
     }
 
     const lower = href.toLowerCase()
-    link.type = lower.endsWith('.svg')
+    link.type = lower.includes('.svg')
       ? 'image/svg+xml'
-      : lower.endsWith('.jpg') || lower.endsWith('.jpeg')
+      : lower.includes('.jpg') || lower.includes('.jpeg')
         ? 'image/jpeg'
-        : lower.endsWith('.webp')
+        : lower.includes('.webp')
           ? 'image/webp'
           : 'image/png'
     link.href = href
