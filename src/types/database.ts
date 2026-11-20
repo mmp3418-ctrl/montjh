@@ -26,6 +26,7 @@ export interface SiteSettings {
   address_en: string | null
   map_url: string | null
   hero_image_url: string | null
+  logo_url: string | null
   updated_at: string
 }
 

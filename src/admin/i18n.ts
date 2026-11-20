@@ -38,6 +38,8 @@ export interface AdminDictionary {
   noGallery: string
   heroPreview: string
   heroImage: string
+  logoPreview: string
+  logoImage: string
   bilingualHint: string
 }
 
@@ -79,6 +81,8 @@ const ar: AdminDictionary = {
   noGallery: 'لا توجد صور في المعرض',
   heroPreview: 'معاينة خلفية الهيرو',
   heroImage: 'صورة خلفية الهيرو',
+  logoPreview: 'معاينة الشعار',
+  logoImage: 'شعار الموقع (Navbar / Footer / Favicon)',
   bilingualHint: 'عربي / English',
 }
 
@@ -120,6 +124,8 @@ const en: AdminDictionary = {
   noGallery: 'No gallery photos yet',
   heroPreview: 'Hero background preview',
   heroImage: 'Hero Background Image',
+  logoPreview: 'Logo preview',
+  logoImage: 'Site Logo (Navbar / Footer / Favicon)',
   bilingualHint: 'Arabic / English',
 }
 

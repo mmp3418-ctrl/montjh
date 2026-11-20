@@ -28,6 +28,7 @@ type FormState = {
   facilities_intro_ar: string
   facilities_intro_en: string
   hero_image_url: string
+  logo_url: string
 }
 
 function toForm(settings: SiteSettings): FormState {
@@ -45,6 +46,7 @@ function toForm(settings: SiteSettings): FormState {
     facilities_intro_ar: settings.facilities_intro_ar ?? '',
     facilities_intro_en: settings.facilities_intro_en ?? '',
     hero_image_url: settings.hero_image_url ?? '',
+    logo_url: settings.logo_url ?? '',
   }
 }
 
@@ -53,15 +55,15 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
   const [form, setForm] = useState<FormState>(toForm(seedSettings))
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [uploading, setUploading] = useState(false)
+  const [uploadingHero, setUploadingHero] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
 
   const load = async (): Promise<void> => {
     setLoading(true)
     const { data, error } = await supabase
       .from('site_settings')
       .select('*')
-      .order('id', { ascending: true })
-      .limit(1)
+      .eq('id', 1)
       .maybeSingle()
 
     if (error) {
@@ -88,24 +90,29 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
     setForm((prev) => ({ ...prev, [key]: value }))
   }
 
-  const handleUpload = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+  const persistMediaField = async (
+    field: 'hero_image_url' | 'logo_url',
+    publicUrl: string | null,
+  ): Promise<void> => {
+    const payload = {
+      [field]: publicUrl,
+      updated_at: new Date().toISOString(),
+    }
+    const { error } = await supabase.from('site_settings').update(payload).eq('id', rowId)
+    if (error) throw new Error(error.message)
+  }
+
+  const handleUploadHero = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0]
     event.target.value = ''
     if (!file) return
 
-    setUploading(true)
+    setUploadingHero(true)
     try {
       const previous = form.hero_image_url
       const { publicUrl } = await uploadMediaFile('hero', file)
       setForm((prev) => ({ ...prev, hero_image_url: publicUrl }))
-
-      const payload = {
-        hero_image_url: publicUrl,
-        updated_at: new Date().toISOString(),
-      }
-
-      const { error } = await supabase.from('site_settings').update(payload).eq('id', rowId)
-      if (error) throw new Error(error.message)
+      await persistMediaField('hero_image_url', publicUrl)
 
       if (previous && previous !== publicUrl) {
         try {
@@ -122,20 +129,47 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
         message: err instanceof Error ? err.message : dict.error,
       })
     } finally {
-      setUploading(false)
+      setUploadingHero(false)
+    }
+  }
+
+  const handleUploadLogo = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    setUploadingLogo(true)
+    try {
+      const previous = form.logo_url
+      const { publicUrl } = await uploadMediaFile('logo', file)
+      setForm((prev) => ({ ...prev, logo_url: publicUrl }))
+      await persistMediaField('logo_url', publicUrl)
+
+      if (previous && previous !== publicUrl) {
+        try {
+          await deleteMediaByPublicUrl(previous)
+        } catch {
+          /* non-blocking cleanup */
+        }
+      }
+
+      onToast({ type: 'success', message: dict.saved })
+    } catch (err) {
+      onToast({
+        type: 'error',
+        message: err instanceof Error ? err.message : dict.error,
+      })
+    } finally {
+      setUploadingLogo(false)
     }
   }
 
   const handleRemoveHero = async (): Promise<void> => {
     if (!form.hero_image_url) return
-    setUploading(true)
+    setUploadingHero(true)
     try {
       const previous = form.hero_image_url
-      const { error } = await supabase
-        .from('site_settings')
-        .update({ hero_image_url: null, updated_at: new Date().toISOString() })
-        .eq('id', rowId)
-      if (error) throw new Error(error.message)
+      await persistMediaField('hero_image_url', null)
       setForm((prev) => ({ ...prev, hero_image_url: '' }))
       try {
         await deleteMediaByPublicUrl(previous)
@@ -149,7 +183,30 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
         message: err instanceof Error ? err.message : dict.error,
       })
     } finally {
-      setUploading(false)
+      setUploadingHero(false)
+    }
+  }
+
+  const handleRemoveLogo = async (): Promise<void> => {
+    if (!form.logo_url) return
+    setUploadingLogo(true)
+    try {
+      const previous = form.logo_url
+      await persistMediaField('logo_url', null)
+      setForm((prev) => ({ ...prev, logo_url: '' }))
+      try {
+        await deleteMediaByPublicUrl(previous)
+      } catch {
+        /* ignore */
+      }
+      onToast({ type: 'success', message: dict.saved })
+    } catch (err) {
+      onToast({
+        type: 'error',
+        message: err instanceof Error ? err.message : dict.error,
+      })
+    } finally {
+      setUploadingLogo(false)
     }
   }
 
@@ -170,7 +227,6 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
         facilities_heading_en: form.facilities_heading_en.trim() || null,
         facilities_intro_ar: form.facilities_intro_ar.trim() || null,
         facilities_intro_en: form.facilities_intro_en.trim() || null,
-        // Keep legacy columns in sync for older schemas / readers
         about_ar: form.complex_overview_ar.trim() || null,
         about_en: form.complex_overview_en.trim() || null,
         vision_ar: form.facilities_heading_ar.trim() || null,
@@ -178,20 +234,17 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
         mission_ar: form.facilities_intro_ar.trim() || null,
         mission_en: form.facilities_intro_en.trim() || null,
         hero_image_url: form.hero_image_url.trim() || null,
+        logo_url: form.logo_url.trim() || null,
         updated_at: new Date().toISOString(),
       }
 
       let error = (await supabase.from('site_settings').update(payload).eq('id', rowId)).error
 
       if (error) {
-        // Create the row if the table is empty
         const insertAttempt = await supabase
           .from('site_settings')
           .upsert({ id: rowId === 1 || rowId === '1' ? 1 : rowId, ...payload })
         error = insertAttempt.error
-        if (!error && insertAttempt.data) {
-          /* ok */
-        }
       }
 
       if (error) throw new Error(error.message)
@@ -214,6 +267,47 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
   return (
     <form onSubmit={(e) => void handleSave(e)} className="space-y-6">
       <section className="glass rounded-2xl p-5 sm:p-6">
+        <h3 className="mb-4 text-base font-bold text-[var(--text-primary)]">{dict.logoImage}</h3>
+        <div className="grid gap-4 lg:grid-cols-[0.8fr_1fr]">
+          <div className="flex min-h-36 items-center justify-center overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-deep)] p-6">
+            {form.logo_url ? (
+              <img
+                src={form.logo_url}
+                alt={dict.logoPreview}
+                className="max-h-24 w-auto object-contain"
+              />
+            ) : (
+              <p className="text-sm text-[var(--text-muted)]">{dict.logoPreview}</p>
+            )}
+          </div>
+          <div className="flex flex-col justify-center gap-3">
+            <label className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white">
+              <ImagePlus size={16} />
+              {uploadingLogo ? dict.uploading : dict.upload}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                disabled={uploadingLogo}
+                onChange={(e) => void handleUploadLogo(e)}
+              />
+            </label>
+            {form.logo_url ? (
+              <button
+                type="button"
+                disabled={uploadingLogo}
+                onClick={() => void handleRemoveLogo()}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-red-400/30 bg-red-500/10 px-4 text-sm font-semibold text-red-400 transition hover:bg-red-500/15"
+              >
+                <Trash2 size={16} />
+                {dict.remove}
+              </button>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="glass rounded-2xl p-5 sm:p-6">
         <h3 className="mb-4 text-base font-bold text-[var(--text-primary)]">{dict.heroImage}</h3>
         <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
           <div className="overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-deep)]">
@@ -232,19 +326,19 @@ const SiteSettingsTab: FC<SiteSettingsTabProps> = ({ dict, onToast }) => {
           <div className="flex flex-col justify-center gap-3">
             <label className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white">
               <ImagePlus size={16} />
-              {uploading ? dict.uploading : dict.upload}
+              {uploadingHero ? dict.uploading : dict.upload}
               <input
                 type="file"
                 accept="image/*"
                 className="hidden"
-                disabled={uploading}
-                onChange={(e) => void handleUpload(e)}
+                disabled={uploadingHero}
+                onChange={(e) => void handleUploadHero(e)}
               />
             </label>
             {form.hero_image_url ? (
               <button
                 type="button"
-                disabled={uploading}
+                disabled={uploadingHero}
                 onClick={() => void handleRemoveHero()}
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-red-400/30 bg-red-500/10 px-4 text-sm font-semibold text-red-400 transition hover:bg-red-500/15"
               >

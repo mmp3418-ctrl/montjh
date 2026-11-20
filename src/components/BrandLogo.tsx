@@ -1,6 +1,8 @@
-import { useState, type FC, type SyntheticEvent } from 'react'
+import { useEffect, useState, type FC, type SyntheticEvent } from 'react'
+import { useSite } from '../context/SiteDataContext'
 import { useTheme } from '../context/ThemeContext'
 import { BRAND_NAME } from '../data/content'
+import { resolveLogoUrl } from '../utils/siteSettings'
 
 interface BrandLogoProps {
   compact?: boolean
@@ -28,25 +30,34 @@ const LogoMarkFallback: FC<{ size: number }> = ({ size }) => (
 
 const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
   const { theme } = useTheme()
-  const [logoFailed, setLogoFailed] = useState(false)
+  const { settings } = useSite()
+  const logoSrc = resolveLogoUrl(settings.logo_url)
+  const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const markColor = theme === 'dark' ? '#F8FAFC' : '#0B192C'
+  const showImage = failedSrc !== logoSrc
+
+  useEffect(() => {
+    setFailedSrc(null)
+  }, [logoSrc])
+
   const handleLogoError = (event: SyntheticEvent<HTMLImageElement>): void => {
     event.currentTarget.style.display = 'none'
-    setLogoFailed(true)
+    setFailedSrc(logoSrc)
   }
 
   return (
     <div className={`flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
-      {!logoFailed ? (
+      {showImage ? (
         <img
-          src="/logo.png"
+          key={logoSrc}
+          src={logoSrc}
           alt="Garden City L.L.C"
-          className="h-10 w-auto shrink-0 object-contain md:h-12"
+          className="h-9 w-auto shrink-0 object-contain sm:h-10 md:h-12"
           onError={handleLogoError}
           decoding="async"
         />
       ) : (
-        <LogoMarkFallback size={compact ? 40 : 48} />
+        <LogoMarkFallback size={compact ? 36 : 44} />
       )}
 
       <p
