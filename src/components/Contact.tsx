@@ -2,7 +2,7 @@ import { ExternalLink, Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState, type ChangeEvent, type FC, type FormEvent } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { useSite } from '../context/SiteDataContext'
-import { MAP_EMBED_URL, MAP_EXTERNAL_URL } from '../data/seedContent'
+import { MAP_EXTERNAL_URL, toMapEmbedUrl } from '../data/seedContent'
 import { supabase } from '../lib/supabase'
 import type { ContactFormData, ContactFormErrors } from '../types'
 import { pickLocale, toTelHref } from '../utils/locale'
@@ -26,6 +26,8 @@ const Contact: FC = () => {
   const address = pickLocale(language, settings.address_ar, settings.address_en)
   const phone = settings.phone?.trim() || ''
   const email = settings.email?.trim() || ''
+  const mapExternal = settings.map_url?.trim() || MAP_EXTERNAL_URL
+  const mapEmbed = toMapEmbedUrl(settings.map_url)
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -124,7 +126,7 @@ const Contact: FC = () => {
               <p className="mt-0.5 text-xs text-[var(--text-muted)] sm:text-sm">{address}</p>
             </div>
             <a
-              href={MAP_EXTERNAL_URL}
+              href={mapExternal}
               target="_blank"
               rel="noreferrer"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white"
@@ -136,7 +138,7 @@ const Contact: FC = () => {
           <div className="relative aspect-[16/11] w-full bg-[var(--bg-deep)] sm:aspect-[16/9]">
             <iframe
               title={t.contact.mapTitle}
-              src={MAP_EMBED_URL}
+              src={mapEmbed}
               className="absolute inset-0 h-full w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

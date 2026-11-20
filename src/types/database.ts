@@ -1,9 +1,18 @@
 export interface SiteSettings {
-  id: string
+  id: string | number
   hero_title_ar: string | null
   hero_title_en: string | null
   hero_subtitle_ar: string | null
   hero_subtitle_en: string | null
+  main_heading_ar: string | null
+  main_heading_en: string | null
+  complex_overview_ar: string | null
+  complex_overview_en: string | null
+  facilities_heading_ar: string | null
+  facilities_heading_en: string | null
+  facilities_intro_ar: string | null
+  facilities_intro_en: string | null
+  /** Legacy aliases kept for older rows */
   about_ar: string | null
   about_en: string | null
   vision_ar: string | null
@@ -11,6 +20,7 @@ export interface SiteSettings {
   mission_ar: string | null
   mission_en: string | null
   phone: string | null
+  whatsapp: string | null
   email: string | null
   address_ar: string | null
   address_en: string | null
@@ -58,6 +68,7 @@ export interface ContactMessage {
   email: string
   phone: string | null
   message: string
+  is_read: boolean | null
   created_at: string
 }
 
@@ -68,37 +79,18 @@ export type ContactMessageInsert = {
   message: string
 }
 
-type PublicTable<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
-  Row: Row
-  Insert: Insert
-  Update: Update
-  Relationships: []
+export type SiteSettingsUpdate = Partial<
+  Omit<SiteSettings, 'id' | 'updated_at'>
+> & { updated_at?: string }
+
+export type ServiceInsert = {
+  title_ar: string
+  title_en: string
+  description_ar?: string | null
+  description_en?: string | null
+  icon_name?: string | null
+  image_url?: string | null
+  sort_order?: number
 }
 
-export interface Database {
-  public: {
-    Tables: {
-      site_settings: PublicTable<
-        SiteSettings,
-        Partial<Omit<SiteSettings, 'id' | 'updated_at'>> & { id?: string }
-      >
-      services: PublicTable<
-        ServiceRow,
-        Omit<ServiceRow, 'id' | 'created_at'> & { id?: string; created_at?: string }
-      >
-      gallery_items: PublicTable<
-        GalleryItem,
-        Partial<Omit<GalleryItem, 'id' | 'created_at'>> & { id?: string; created_at?: string }
-      >
-      management_contacts: PublicTable<
-        ManagementContact,
-        Omit<ManagementContact, 'id' | 'created_at'> & { id?: string; created_at?: string }
-      >
-      contact_messages: PublicTable<ContactMessage, ContactMessageInsert>
-    }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
-    CompositeTypes: Record<string, never>
-  }
-}
+export type ServiceUpdate = Partial<ServiceInsert>

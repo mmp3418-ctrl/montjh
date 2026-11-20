@@ -25,6 +25,7 @@ export interface ContactFormData {
 export type ContactFormErrors = Partial<Record<keyof ContactFormData, string>>
 
 export type {
+  ContactMessage,
   ContactMessageInsert,
   GalleryItem,
   ManagementContact,

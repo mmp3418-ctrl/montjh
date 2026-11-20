@@ -1,39 +1,26 @@
 import type { FC } from 'react'
-import Contact from './components/Contact'
-import FacilitiesOverview from './components/FacilitiesOverview'
-import Footer from './components/Footer'
-import Gallery from './components/Gallery'
-import Hero from './components/Hero'
-import Navbar from './components/Navbar'
-import Services from './components/Services'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import AdminDashboard from './admin/AdminDashboard'
+import AdminLogin from './admin/AdminLogin'
+import { AuthProvider } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext'
-import { SiteDataProvider } from './context/SiteDataContext'
 import { ThemeProvider } from './context/ThemeContext'
-
-const AppShell: FC = () => {
-  return (
-    <div className="relative min-h-dvh overflow-x-hidden bg-page text-primary">
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(0,169,255,0.07),transparent_45%),radial-gradient(ellipse_at_bottom_right,rgba(0,71,171,0.08),transparent_40%)]" />
-      <Navbar />
-      <main>
-        <Hero />
-        <FacilitiesOverview />
-        <Services />
-        <Gallery />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
-  )
-}
+import HomePage from './pages/HomePage'
 
 const App: FC = () => {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <SiteDataProvider>
-          <AppShell />
-        </SiteDataProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
   )

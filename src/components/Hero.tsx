@@ -9,11 +9,15 @@ const Hero: FC = () => {
   const { t, language } = useLanguage()
   const { settings } = useSite()
 
-  const title = pickLocale(language, settings.hero_title_ar, settings.hero_title_en)
+  const title = pickLocale(
+    language,
+    settings.main_heading_ar ?? settings.hero_title_ar,
+    settings.main_heading_en ?? settings.hero_title_en,
+  )
   const subtitle = pickLocale(
     language,
-    settings.hero_subtitle_ar,
-    settings.hero_subtitle_en,
+    settings.complex_overview_ar ?? settings.hero_subtitle_ar,
+    settings.complex_overview_en ?? settings.hero_subtitle_en,
   )
 
   return (
@@ -25,7 +29,6 @@ const Hero: FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,rgba(0,169,255,0.32),transparent_42%),radial-gradient(ellipse_at_80%_10%,rgba(0,120,215,0.28),transparent_40%),radial-gradient(ellipse_at_70%_80%,rgba(0,71,171,0.35),transparent_45%),linear-gradient(145deg,#07111D_0%,#0B192C_48%,#102038_100%)]" />
       <div className="pointer-events-none absolute -start-10 top-24 h-72 w-72 rounded-full bg-[#00A9FF]/25 blur-[100px]" />
       <div className="pointer-events-none absolute end-0 bottom-10 h-80 w-80 rounded-full bg-[#0047AB]/30 blur-[110px]" />
-      <div className="pointer-events-none absolute start-1/3 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-white/10 blur-[60px]" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0B192C]/35 via-transparent to-[#0B192C]/85" />
 
       <div className="relative container-site w-full">
@@ -33,7 +36,7 @@ const Hero: FC = () => {
           {BRAND_NAME}
         </p>
 
-        <h1 className="max-w-4xl text-[2.1rem] font-extrabold leading-[1.2] text-white sm:text-5xl md:text-6xl">
+        <h1 className="max-w-4xl text-[2rem] font-extrabold leading-[1.2] text-white sm:text-5xl md:text-6xl">
           {title}
         </h1>
 
