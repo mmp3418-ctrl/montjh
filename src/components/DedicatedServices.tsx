@@ -28,7 +28,7 @@ const DedicatedServices: FC = () => {
             <EmptyState message={t.empty.noServices} />
           </div>
         ) : (
-          <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-2 xl:grid-cols-3">
+          <ul className="cards-grid mt-10 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
             {dedicated.map((item, index) => (
               <li key={item.id} className="min-h-0">
                 <FacilityCard item={item} language={language} index={index} />

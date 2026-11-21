@@ -55,7 +55,7 @@ const Services: FC = () => {
             <EmptyState message={t.empty.noServices} />
           </div>
         ) : (
-          <ul className="mt-10 grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-2">
+          <ul className="cards-grid mt-10 grid-cols-1 md:grid-cols-2">
             {facilities.map((item, index) => (
               <li key={item.id} className="min-h-0">
                 <FacilityCard item={item} language={language} index={index} />

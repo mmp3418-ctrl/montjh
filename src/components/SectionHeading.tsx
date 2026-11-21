@@ -17,8 +17,8 @@ const SectionHeading: FC<SectionHeadingProps> = ({
 
   return (
     <div className={`w-full max-w-3xl ${alignment}`}>
-      <p className="mb-3 text-sm font-semibold tracking-wide text-cyan">{eyebrow}</p>
-      <h2 className="text-balance text-3xl font-extrabold leading-tight text-[var(--text-primary)] sm:text-4xl">
+      <p className="mb-3 text-sm font-semibold tracking-[0.14em] text-cyan">{eyebrow}</p>
+      <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight text-[var(--text-primary)] sm:text-4xl">
         {title}
       </h2>
       {description ? (

@@ -70,7 +70,7 @@ const Contact: FC = () => {
   }
 
   const fieldClass =
-    'w-full min-h-12 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-[var(--glass-border-hover)] focus:ring-2 focus:ring-[#00A9FF]/20'
+    'w-full min-h-12 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition-[border-color,box-shadow,background-color] duration-[var(--motion-duration)] ease-[var(--motion-smooth)] placeholder:text-[var(--text-muted)] focus:border-[var(--glass-border-hover)] focus:ring-2 focus:ring-[#00A9FF]/20'
 
   return (
     <section id="contact" className="section-pad relative overflow-hidden">
@@ -79,25 +79,29 @@ const Contact: FC = () => {
       <div className="container-site relative">
         <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="cards-grid mt-10 grid-cols-1 md:grid-cols-3">
           <div className="glass-card rounded-2xl p-5 sm:p-6">
-            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+            <div className="card-icon relative z-[1] mb-4 inline-flex rounded-2xl bg-brand-gradient p-3 text-white shadow-[0_8px_22px_rgba(0,169,255,0.28)]">
               <MapPin size={18} />
             </div>
-            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.address}</p>
-            <p className="mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)]">
+            <p className="relative z-[1] text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.address}
+            </p>
+            <p className="relative z-[1] mt-2 text-sm font-semibold leading-7 text-[var(--text-primary)]">
               {address}
             </p>
           </div>
 
           <div className="glass-card rounded-2xl p-5 sm:p-6">
-            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+            <div className="card-icon relative z-[1] mb-4 inline-flex rounded-2xl bg-brand-gradient p-3 text-white shadow-[0_8px_22px_rgba(0,169,255,0.28)]">
               <Phone size={18} />
             </div>
-            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.phone}</p>
+            <p className="relative z-[1] text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.phone}
+            </p>
             <a
               href={toTelHref(phone)}
-              className="mt-2 inline-block text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
+              className="relative z-[1] mt-2 inline-block text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
               dir="ltr"
             >
               {phone}
@@ -105,13 +109,15 @@ const Contact: FC = () => {
           </div>
 
           <div className="glass-card rounded-2xl p-5 sm:p-6">
-            <div className="mb-4 inline-flex rounded-xl bg-brand-gradient p-2.5 text-white">
+            <div className="card-icon relative z-[1] mb-4 inline-flex rounded-2xl bg-brand-gradient p-3 text-white shadow-[0_8px_22px_rgba(0,169,255,0.28)]">
               <Mail size={18} />
             </div>
-            <p className="text-xs font-semibold text-[var(--text-muted)]">{t.contact.email}</p>
+            <p className="relative z-[1] text-xs font-semibold tracking-wide text-[var(--text-muted)]">
+              {t.contact.email}
+            </p>
             <a
               href={`mailto:${email}`}
-              className="mt-2 inline-block break-all text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
+              className="relative z-[1] mt-2 inline-block break-all text-sm font-semibold text-[var(--text-primary)] transition hover:text-cyan"
               dir="ltr"
             >
               {email}
@@ -119,17 +125,19 @@ const Contact: FC = () => {
           </div>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-[var(--shadow-glass)] backdrop-blur-2xl">
-          <div className="flex flex-col gap-3 border-b border-[var(--glass-border)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+        <div className="overview-card glass mt-8 overflow-hidden rounded-2xl border border-[var(--glass-border)]">
+          <div className="flex flex-col gap-3 border-b border-[var(--glass-border)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-5">
             <div>
-              <h3 className="text-base font-bold text-[var(--text-primary)]">{t.contact.mapTitle}</h3>
+              <h3 className="text-base font-bold tracking-tight text-[var(--text-primary)]">
+                {t.contact.mapTitle}
+              </h3>
               <p className="mt-0.5 text-xs text-[var(--text-muted)] sm:text-sm">{address}</p>
             </div>
             <a
               href={mapExternal}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand-gradient px-4 text-sm font-bold text-white shadow-[0_8px_22px_rgba(0,169,255,0.25)] transition hover:brightness-110"
             >
               {t.contact.openMaps}
               <ExternalLink size={14} />
@@ -153,7 +161,7 @@ const Contact: FC = () => {
             void handleSubmit(event)
           }}
           noValidate
-          className="glass mx-auto mt-8 w-full max-w-4xl rounded-2xl p-5 sm:p-7"
+          className="overview-card glass mx-auto mt-8 w-full max-w-4xl rounded-2xl border border-[var(--glass-border)] p-5 sm:p-7 md:p-8"
         >
           <h3 className="mb-5 text-lg font-bold text-[var(--text-primary)] sm:text-xl">
             {t.contact.formTitle}

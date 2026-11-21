@@ -25,20 +25,20 @@ const FacilitiesOverview: FC = () => {
       <div className="pointer-events-none absolute -end-16 bottom-0 h-64 w-64 rounded-full bg-[#0047AB]/12 blur-3xl" />
 
       <div className="container-site relative">
-        <article className="glass overflow-hidden rounded-[1.75rem]">
-          <div className="border-b border-[var(--glass-border)] bg-brand-gradient/10 px-6 py-5 sm:px-8 sm:py-6">
+        <article className="overview-card glass overflow-hidden rounded-[1.75rem] border border-[var(--glass-border)]">
+          <div className="relative border-b border-[var(--glass-border)] bg-gradient-to-br from-[#00A9FF]/14 via-transparent to-[#0047AB]/10 px-6 py-5 sm:px-8 sm:py-7">
             <p
               className="font-display text-xs font-semibold tracking-[0.18em] text-cyan uppercase sm:text-sm"
               dir="ltr"
             >
               {BRAND_NAME}
             </p>
-            <h2 className="mt-3 max-w-4xl text-balance text-2xl font-extrabold leading-tight text-[var(--text-primary)] sm:text-3xl md:text-4xl">
+            <h2 className="mt-3 max-w-4xl text-balance text-2xl font-extrabold leading-tight tracking-tight text-[var(--text-primary)] sm:text-3xl md:text-4xl">
               {heading}
             </h2>
           </div>
 
-          <div className="px-6 py-6 sm:px-8 sm:py-8">
+          <div className="px-6 py-6 sm:px-8 sm:py-8 md:py-9">
             <p className="max-w-4xl text-pretty text-sm leading-8 text-[var(--text-secondary)] sm:text-base sm:leading-9">
               {overview}
             </p>

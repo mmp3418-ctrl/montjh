@@ -115,13 +115,13 @@ const Gallery: FC = () => {
 
           {/* Featured framed slide */}
           <div className="relative mx-auto max-w-4xl">
-            <div className="gallery-frame group relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-[var(--glass-border)] bg-[var(--glass-bg)] shadow-[var(--shadow-glass)] transition duration-300 hover:border-cyan/40 sm:aspect-[16/10]">
+            <div className="gallery-frame group relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-[var(--glass-border)] sm:aspect-[16/10]">
               {activeSrc ? (
                 <img
                   key={activeItem?.id ?? active}
                   src={activeSrc}
                   alt=""
-                  className="h-full w-full object-cover transition duration-500 ease-out"
+                  className="h-full w-full object-cover"
                   decoding="async"
                   draggable={false}
                 />
@@ -144,7 +144,7 @@ const Gallery: FC = () => {
                 <button
                   type="button"
                   onClick={goPrev}
-                  className="gallery-nav absolute start-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--nav-bg)]/90 text-[var(--text-primary)] shadow-lg backdrop-blur-md transition hover:border-cyan/50 hover:text-cyan sm:start-3 sm:h-12 sm:w-12"
+                  className="gallery-nav absolute start-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--nav-bg)]/90 text-[var(--text-primary)] shadow-lg backdrop-blur-md sm:start-3 sm:h-12 sm:w-12"
                   aria-label={t.gallery.prev}
                 >
                   {language === 'ar' ? <ChevronRight size={22} /> : <ChevronLeft size={22} />}
@@ -152,7 +152,7 @@ const Gallery: FC = () => {
                 <button
                   type="button"
                   onClick={goNext}
-                  className="gallery-nav absolute end-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--nav-bg)]/90 text-[var(--text-primary)] shadow-lg backdrop-blur-md transition hover:border-cyan/50 hover:text-cyan sm:end-3 sm:h-12 sm:w-12"
+                  className="gallery-nav absolute end-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--nav-bg)]/90 text-[var(--text-primary)] shadow-lg backdrop-blur-md sm:end-3 sm:h-12 sm:w-12"
                   aria-label={t.gallery.next}
                 >
                   {language === 'ar' ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
@@ -189,7 +189,7 @@ const Gallery: FC = () => {
                           : `Photo ${index + 1}`
                       }
                       onClick={() => goTo(index)}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                      className={`h-2.5 rounded-full transition-[width,background-color] duration-[var(--motion-duration)] ease-[var(--motion-smooth)] ${
                         index === active
                           ? 'w-7 bg-cyan'
                           : 'w-2.5 bg-[var(--text-muted)]/35 hover:bg-cyan/60'
@@ -202,7 +202,7 @@ const Gallery: FC = () => {
           ) : null}
 
           {/* Uniform framed cards grid — image only, no titles/captions */}
-          <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
+          <ul className="cards-grid mt-8 grid-cols-2 sm:mt-10 sm:grid-cols-3 lg:grid-cols-4">
             {cards.map((item, index) => {
               const src = item.image_url?.trim() || null
               const isActive = index === active
@@ -211,10 +211,10 @@ const Gallery: FC = () => {
                   <button
                     type="button"
                     onClick={() => goTo(index)}
-                    className={`gallery-frame group relative block w-full overflow-hidden rounded-2xl border-2 bg-[var(--glass-bg)] transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/60 ${
+                    className={`gallery-frame group relative block w-full overflow-hidden rounded-2xl border-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/60 ${
                       isActive
-                        ? 'border-cyan shadow-[0_0_0_1px_rgba(0,169,255,0.35)]'
-                        : 'border-[var(--glass-border)] hover:border-cyan/45'
+                        ? 'is-active border-cyan'
+                        : 'border-[var(--glass-border)]'
                     }`}
                     aria-label={
                       language === 'ar'
@@ -228,7 +228,7 @@ const Gallery: FC = () => {
                         <img
                           src={src}
                           alt=""
-                          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                          className="h-full w-full object-cover"
                           loading="lazy"
                           decoding="async"
                           draggable={false}

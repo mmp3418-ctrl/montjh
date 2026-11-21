@@ -24,25 +24,28 @@ const FacilityCard: FC<FacilityCardProps> = ({
   const description = pickLocale(language, item.description_ar, item.description_en)
 
   return (
-    <article className="facility-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] p-5 shadow-[var(--shadow-glass)] backdrop-blur-xl transition duration-300 hover:border-[var(--glass-border-hover)] hover:bg-[var(--glass-bg-hover)] sm:p-6">
-      <div className="pointer-events-none absolute -end-8 -top-8 h-28 w-28 rounded-full bg-[#00A9FF]/10 blur-2xl transition duration-300 group-hover:bg-[#00A9FF]/18" />
+    <article className="facility-card group relative flex h-full flex-col rounded-2xl p-5 sm:p-6 md:p-7">
+      <div
+        className="pointer-events-none absolute -end-10 -top-10 h-36 w-36 rounded-full bg-[#00A9FF]/12 blur-3xl transition-[opacity,transform] duration-[var(--motion-duration)] ease-[var(--motion-smooth)] group-hover:scale-110 group-hover:opacity-100 group-focus-within:opacity-100"
+        aria-hidden="true"
+      />
 
-      <div className="relative mb-4 flex items-center gap-3">
-        <div className="inline-flex shrink-0 rounded-xl bg-brand-gradient p-3 text-white shadow-[0_8px_24px_rgba(0,169,255,0.28)] transition duration-300 group-hover:scale-105">
+      <div className="relative mb-5 flex items-center gap-3.5">
+        <div className="card-icon inline-flex shrink-0 rounded-2xl bg-brand-gradient p-3.5 text-white shadow-[0_10px_28px_rgba(0,169,255,0.3)]">
           <ServiceIcon name={item.icon_name} className="h-6 w-6" />
         </div>
         {showIndex && typeof index === 'number' ? (
-          <span className="font-display text-sm font-bold tracking-wide text-cyan">
+          <span className="font-display text-sm font-bold tracking-[0.14em] text-cyan">
             {String(index + 1).padStart(2, '0')}
           </span>
         ) : null}
       </div>
 
-      <h3 className="relative text-lg font-bold leading-snug text-[var(--text-primary)] transition duration-300 group-hover:text-cyan sm:text-xl">
+      <h3 className="card-title relative text-lg font-bold leading-snug tracking-tight text-[var(--text-primary)] sm:text-xl">
         {title}
       </h3>
       {description ? (
-        <p className="relative mt-3 flex-1 text-sm leading-7 text-[var(--text-secondary)] sm:leading-8">
+        <p className="relative mt-3.5 flex-1 text-sm leading-7 text-[var(--text-secondary)] sm:mt-4 sm:text-[0.95rem] sm:leading-8">
           {description}
         </p>
       ) : null}
