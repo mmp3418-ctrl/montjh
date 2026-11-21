@@ -17,7 +17,7 @@ const LogoMarkFallback: FC<{ size: number }> = ({ size }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
-    className="shrink-0"
+    className="brand-logo-mark shrink-0"
   >
     <rect width="48" height="48" rx="12" fill="#0B192C" />
     <circle cx="24" cy="24" r="5" fill="#00A9FF" />
@@ -35,6 +35,7 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const markColor = theme === 'dark' ? '#F8FAFC' : '#0B192C'
   const showImage = Boolean(logoSrc) && failedSrc !== logoSrc
+  const isSvg = Boolean(logoSrc?.toLowerCase().includes('.svg'))
 
   useEffect(() => {
     setFailedSrc(null)
@@ -45,24 +46,36 @@ const BrandLogo: FC<BrandLogoProps> = ({ compact = false, className = '' }) => {
     if (logoSrc) setFailedSrc(logoSrc)
   }
 
+  const shellClass = compact
+    ? 'brand-logo-shell brand-logo-shell--compact'
+    : 'brand-logo-shell brand-logo-shell--full'
+  const imgClass = compact
+    ? 'brand-logo-img h-11 w-auto max-h-11 sm:h-12 sm:max-h-12 md:h-[3.25rem] md:max-h-[3.25rem]'
+    : 'brand-logo-img h-14 w-auto max-h-14 sm:h-16 sm:max-h-16 md:h-[4.75rem] md:max-h-[4.75rem]'
+
   return (
-    <div className={`flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
-      {showImage && logoSrc ? (
-        <img
-          key={logoSrc}
-          src={logoSrc}
-          alt="Garden City L.L.C"
-          className="h-9 w-auto shrink-0 object-contain sm:h-10 md:h-12"
-          onError={handleLogoError}
-          decoding="async"
-        />
-      ) : (
-        <LogoMarkFallback size={compact ? 36 : 44} />
-      )}
+    <div className={`flex min-w-0 items-center gap-3 sm:gap-3.5 ${className}`}>
+      <span className={shellClass} aria-hidden={!showImage}>
+        <span className="brand-logo-glow" aria-hidden="true" />
+        <span className="brand-logo-ring">
+          {showImage && logoSrc ? (
+            <img
+              key={logoSrc}
+              src={logoSrc}
+              alt="Garden City L.L.C"
+              className={`${imgClass} ${isSvg ? 'brand-logo-img--svg' : 'brand-logo-img--raster'}`}
+              onError={handleLogoError}
+              decoding="async"
+            />
+          ) : (
+            <LogoMarkFallback size={compact ? 44 : 56} />
+          )}
+        </span>
+      </span>
 
       <p
         className={`whitespace-nowrap font-display font-extrabold tracking-tight ${
-          compact ? 'text-[13px] sm:text-sm' : 'text-sm sm:text-[15px]'
+          compact ? 'text-sm sm:text-[15px] md:text-base' : 'text-[15px] sm:text-base md:text-lg'
         }`}
         style={{ color: markColor }}
         dir="ltr"

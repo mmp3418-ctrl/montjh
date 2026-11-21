@@ -188,6 +188,86 @@
     min-width: 44px;
   }
 
+  .brand-logo-shell {
+    position: relative;
+    display: inline-flex;
+    shrink: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brand-logo-glow {
+    pointer-events: none;
+    position: absolute;
+    inset: -28%;
+    z-index: 0;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--color-cyan) 42%, transparent) 0%,
+      color-mix(in srgb, var(--color-teal) 18%, transparent) 38%,
+      transparent 72%
+    );
+    filter: blur(10px);
+    opacity: 0.9;
+  }
+
+  html[data-theme='light'] .brand-logo-glow {
+    background: radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--color-cyan) 48%, white) 0%,
+      color-mix(in srgb, var(--color-teal) 16%, transparent) 42%,
+      transparent 74%
+    );
+    opacity: 0.85;
+  }
+
+  .brand-logo-ring {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--color-cyan) 38%, var(--glass-border));
+    background: color-mix(in srgb, var(--bg-elevated) 72%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, white 8%, transparent),
+      0 6px 18px color-mix(in srgb, var(--color-cyan) 16%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .brand-logo-shell--compact .brand-logo-ring {
+    padding: 0.2rem 0.35rem;
+  }
+
+  .brand-logo-shell--full .brand-logo-ring {
+    padding: 0.4rem 0.55rem;
+  }
+
+  .brand-logo-shell--compact .brand-logo-glow {
+    inset: -22%;
+    filter: blur(8px);
+  }
+
+  .brand-logo-img {
+    display: block;
+    width: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .brand-logo-img--raster {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  .brand-logo-img--svg,
+  .brand-logo-mark {
+    image-rendering: auto;
+  }
+
   .gallery-frame {
     -webkit-tap-highlight-color: transparent;
   }
